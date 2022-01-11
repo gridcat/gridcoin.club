@@ -1,0 +1,26 @@
+name: Check Projects
+
+on: push
+
+jobs:
+  grc-stamp-test:
+    name: grc-stamp project tests
+    runs-on: ubuntu-latest
+    working-directory
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout
+      
+      - uses: actions/setup-node@v2
+        name: Setup Node v14
+        with:
+          node-version: '14'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        # This is a weak point, it will npm install all projects
+        run: npx lerna bootstrap --npm-client npm
+      
+      - name: Run strinct typecheck
+        working_directory: packages/grc-stamp
+        run: npm run typecheck
