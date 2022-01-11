@@ -21,6 +21,15 @@ jobs:
         # This is a weak point, it will npm install all projects
         run: npx lerna bootstrap --npm-client npm
       
-      - name: Run strinct typecheck
-        working_directory: packages/grc-stamp
+      - name: Run strict typecheck
+        working-directory: ./packages/grc-stamp
         run: npm run typecheck
+      
+      - name: Run unit tests
+        working-directory: ./packages/grc-stamp
+        run: npm run test:unit
+      
+      - name: Run linter
+        working-directory: ./packages/grc-stamp
+        run: npm run test:lint
+
