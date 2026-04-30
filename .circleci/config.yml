@@ -14,8 +14,13 @@ jobs:
           keys:
             - v1-deps-{{ checksum "package-lock.json" }}
       - run:
-          name: Install dependencies
-          command: npm ci
+          name: Install dependencies (only on cache miss)
+          command: |
+            if [ -d node_modules ]; then
+              echo "node_modules restored from cache; skipping install"
+            else
+              npm ci
+            fi
       - save_cache:
           key: v1-deps-{{ checksum "package-lock.json" }}
           paths:
@@ -38,8 +43,13 @@ jobs:
           keys:
             - v1-deps-{{ checksum "package-lock.json" }}
       - run:
-          name: Install dependencies
-          command: npm ci
+          name: Install dependencies (only on cache miss)
+          command: |
+            if [ -d node_modules ]; then
+              echo "node_modules restored from cache; skipping install"
+            else
+              npm ci
+            fi
       - run:
           name: Trust SSH key
           command: mkdir -p ~/.ssh/ && touch ~/.ssh/known_hosts && ssh-keyscan github.com >> ~/.ssh/known_hosts
@@ -81,6 +91,7 @@ workflows:
               ignore: /.*/
 
       - release:
+          context: semantic-release
           requires:
             - checks
           filters:
