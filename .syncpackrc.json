@@ -1,8 +1,0 @@
-{
-  "semverGroups": [
-    {
-      "dependencies": ["*jest*", "*react*", "vitest"],
-      "range": ""
-    }
-  ]
-}

@@ -1,7 +1,0 @@
-{
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "tui": {
-    "autoExit": 0
-  },
-  "defaultBase": "master"
-}

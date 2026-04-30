@@ -3,7 +3,7 @@ FROM node:22.16.0-alpine3.22 AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm install --frozen-lockfile
+RUN npm ci
 
 # Rebuild the source code only when needed
 FROM node:22.16.0-alpine3.22 AS builder

@@ -66,7 +66,7 @@ export const projects: ProjectEntity[] = [
     url: 'https://boinc.berkeley.edu',
     blurb: 'Volunteer computing platform that Gridcoin rewards participation in.',
     category: 'mining',
-    tags: ['compute'],
+    tags: ['boinc'],
     status: 'live',
     logo: '/projects/boinc.png',
   },
@@ -93,7 +93,7 @@ export const projects: ProjectEntity[] = [
     url: 'https://freegridco.in',
     blurb: 'Gridcoin faucet bundled with open-source provably-fair on-chain games.',
     category: 'tool',
-    tags: ['faucet', 'game'],
+    tags: ['faucet'],
     status: 'live',
     // No logo vendored yet — falls back to the initial-letter chip.
   },
