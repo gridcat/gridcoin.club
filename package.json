@@ -1,0 +1,24 @@
+{
+  "name": "gridcoin-club",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@nx/eslint": "^21.5.2",
+    "@nx/jest": "21.5.2",
+    "@nx/next": "21.5.2",
+    "jest": "^30.0.2",
+    "nx": "21.5.2",
+    "syncpack": "^13.0.4"
+  },
+  "node": ">=22.0.0",
+  "nx": {},
+  "packageManager": "npm@10.9.0",
+  "private": true,
+  "scripts": {
+    "dev:deps:fix": "syncpack fix-mismatches",
+    "dev:deps:lint": "syncpack lint",
+    "dev:test": "npm run dev:test:unit && npm run dev:test:lint",
+    "dev:test:lint": "nx run-many --target=test:lint --all",
+    "dev:test:unit": "nx run-many --target=test:unit --all",
+    "dev:typecheck": "nx run-many --target=typecheck --all"
+  }
+}

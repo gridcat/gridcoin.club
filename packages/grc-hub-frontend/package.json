@@ -1,0 +1,95 @@
+{
+  "name": "grc-hub-frontend",
+  "version": "0.0.0",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/server": "^11.11.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
+    "cookie": "^1.1.1",
+    "next": "16.2.3",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/js": "^9.39.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^12.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^10.0.3",
+    "@semantic-release/npm": "^12.0.2",
+    "@semantic-release/release-notes-generator": "^13.0.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "19.2.14",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.3",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "7.0.1",
+    "globals": "^17.5.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^16.4.0",
+    "semantic-release": "^23.0.8",
+    "semantic-release-monorepo": "^8.0.2",
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^8.58.1",
+    "vitest": "4.1.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{src,test,tools}/**/*.ts": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "private": true,
+  "release": {
+    "tagFormat": "grc-hub-frontend-v${version}",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      "@semantic-release/github"
+    ]
+  },
+  "scripts": {
+    "build": "next build",
+    "commit": "cz",
+    "dev": "next dev -p 3003",
+    "semantic-release": "semantic-release -e semantic-release-monorepo",
+    "start": "next start",
+    "test:lint": "eslint .",
+    "test:unit": "vitest run",
+    "typecheck": "tsc --project ./tsconfig.json --noEmit --pretty false"
+  }
+}

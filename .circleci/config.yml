@@ -1,0 +1,195 @@
+version: 2.1
+
+defaults: &defaults
+  working_directory: ~/app
+  docker:
+    - image: cimg/node:22.16
+
+jobs:
+  install-and-detect:
+    <<: *defaults
+    environment:
+      PIPELINE_BASE_REVISION: << pipeline.git.base_revision >>
+    steps:
+      - checkout
+      - run:
+          name: Fetch full history and tags for Nx affected comparison
+          command: |
+            git fetch --tags --unshallow origin master:refs/remotes/origin/master 2>/dev/null || \
+              git fetch --tags origin master:refs/remotes/origin/master
+      - restore_cache:
+          keys:
+            - v1-root-deps-{{ checksum "package-lock.json" }}
+      - restore_cache:
+          keys:
+            - v1-grc-hub-frontend-deps-{{ checksum "packages/grc-hub-frontend/package-lock.json" }}
+      - run:
+          name: Install root dependencies
+          command: |
+            HASH=$(sha256sum package-lock.json | awk '{print $1}')
+            if [ -f node_modules/.lockfile-hash ] && [ "$(cat node_modules/.lockfile-hash)" = "$HASH" ]; then
+              echo "Root deps cache hit — skipping install"
+            else
+              npm ci
+              echo "$HASH" > node_modules/.lockfile-hash
+            fi
+      - run:
+          name: Install grc-hub-frontend dependencies
+          command: |
+            cd ~/app/packages/grc-hub-frontend
+            HASH=$(sha256sum package-lock.json | awk '{print $1}')
+            if [ -f node_modules/.lockfile-hash ] && [ "$(cat node_modules/.lockfile-hash)" = "$HASH" ]; then
+              echo "grc-hub-frontend deps cache hit — skipping install"
+            else
+              npm ci
+              echo "$HASH" > node_modules/.lockfile-hash
+            fi
+      - save_cache:
+          key: v1-root-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/app/node_modules
+      - save_cache:
+          key: v1-grc-hub-frontend-deps-{{ checksum "packages/grc-hub-frontend/package-lock.json" }}
+          paths:
+            - ~/app/packages/grc-hub-frontend/node_modules
+      - run:
+          name: Detect affected projects
+          command: |
+            mkdir -p ~/app/.affected
+
+            check_affected() {
+              local project="$1"
+              local base
+
+              if [ -n "$PIPELINE_BASE_REVISION" ]; then
+                base="$PIPELINE_BASE_REVISION"
+              else
+                base="origin/master"
+              fi
+
+              echo "Checking $project against base: $base"
+              local affected
+              affected=$(npx nx show projects --affected --base="$base" --head=HEAD 2>/dev/null) || {
+                echo "  WARNING: affected detection failed (base=$base), marking $project as affected"
+                echo "true" > ~/app/.affected/"$project"
+                return
+              }
+              echo "  affected projects in range: $affected"
+              if echo "$affected" | grep -qw "$project"; then
+                echo "true" > ~/app/.affected/"$project"
+              else
+                echo "false" > ~/app/.affected/"$project"
+              fi
+              echo "  $project affected: $(cat ~/app/.affected/"$project")"
+            }
+
+            check_affected grc-hub-frontend
+      - persist_to_workspace:
+          root: ~/app
+          paths: .
+
+  grc-hub-frontend-checks:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: Check if grc-hub-frontend is affected
+          command: |
+            FLAG=$(cat ~/app/.affected/grc-hub-frontend 2>/dev/null || echo "false")
+            if [ "$FLAG" != "true" ]; then
+              echo "grc-hub-frontend not affected, skipping"
+              circleci-agent step halt
+            fi
+      - run:
+          name: Run lint
+          command: cd ~/app/packages/grc-hub-frontend && npm run test:lint
+      - run:
+          name: Run typecheck
+          command: cd ~/app/packages/grc-hub-frontend && npm run typecheck
+      - run:
+          name: Run unit tests
+          command: cd ~/app/packages/grc-hub-frontend && npm run test:unit
+
+  grc-hub-frontend-release:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: Trust SSH key
+          command: mkdir -p ~/.ssh/ && touch ~/.ssh/known_hosts && ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - run:
+          name: Semantic release
+          command: cd ~/app/packages/grc-hub-frontend && npm run semantic-release
+
+  grc-hub-frontend_build_image:
+    <<: *defaults
+    docker:
+      - image: docker:git
+    steps:
+      - checkout
+      - run:
+          name: Get the recent changes
+          command: git pull origin master
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Install dependencies
+          command: apk add --no-cache jq
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/grc-hub-frontend.tar
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/grc-hub-frontend.tar | true
+      - run:
+          name: Build application Docker image
+          command: |
+            cd ~/app/packages/grc-hub-frontend && docker build --cache-from=app -t app .
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            cd ~/app/packages/grc-hub-frontend && docker save -o /caches/grc-hub-frontend.tar app
+      - deploy:
+          name: Push application Docker image
+          command: |
+            cd ~/app/packages/grc-hub-frontend
+            docker login ghcr.io -u gridcat -p${CR_PAT}
+            docker tag app "ghcr.io/gridcat/$(jq -r '.name' package.json):$(jq -r '.version' package.json)"
+            docker push "ghcr.io/gridcat/$(jq -r '.name' package.json):$(jq -r '.version' package.json)"
+            docker tag app "ghcr.io/gridcat/$(jq -r '.name' package.json):latest"
+            docker push "ghcr.io/gridcat/$(jq -r '.name' package.json):latest"
+
+workflows:
+  ci:
+    jobs:
+      - install-and-detect:
+          filters:
+            tags:
+              ignore: /.*/
+
+      - grc-hub-frontend-checks:
+          requires:
+            - install-and-detect
+
+      - grc-hub-frontend-release:
+          requires:
+            - grc-hub-frontend-checks
+          filters:
+            branches:
+              only: master
+
+  grc-hub-frontend_deploy-tag:
+    jobs:
+      - grc-hub-frontend_build_image:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^grc-hub-frontend-v.*/

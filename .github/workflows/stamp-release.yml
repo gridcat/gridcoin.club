@@ -1,0 +1,17 @@
+name: Stamp release on Gridcoin
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  stamp:
+    if: startsWith(github.event.release.tag_name, 'grc-hub-frontend-v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Stamp release assets on Gridcoin blockchain
+        uses: gridcat/gridcoin-stamp-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

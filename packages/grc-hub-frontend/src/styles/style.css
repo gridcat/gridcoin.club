@@ -1,0 +1,105 @@
+
+body {
+  background-color: #f8fafd;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Regular'), url('/fonts/SFUIText/SFUIText-Regular.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Italic'), url('/fonts/SFUIText/SFUIText-RegularItalic.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Light'), url('/fonts/SFUIText/SFUIText-Light.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Light Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Light Italic'), url('/fonts/SFUIText/SFUIText-LightItalic.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Medium'), url('/fonts/SFUIText/SFUIText-Medium.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Medium Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Medium Italic'), url('/fonts/SFUIText/SFUIText-MediumItalic.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Semibold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Semibold'), url('/fonts/SFUIText/SFUIText-Semibold.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Semibold Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Semibold Italic'), url('/fonts/SFUIText/SFUIText-SemiboldItalic.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Bold'), url('/fonts/SFUIText/SFUIText-Bold.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Bold Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Bold Italic'), url('/fonts/SFUIText/SFUIText-BoldItalic.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Heavy';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Heavy'), url('/fonts/SFUIText/SFUIText-Heavy.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Text Heavy Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Heavy Italic'), url('/fonts/SFUIText/SFUIText-HeavyItalic.woff') format('woff');
+  font-display: swap;
+}
