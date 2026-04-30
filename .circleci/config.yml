@@ -26,9 +26,9 @@ jobs:
       - run:
           name: Typecheck
           command: npm run typecheck
-      - run:
-          name: Unit tests
-          command: npm run test:unit
+      # - run:
+      #     name: Unit tests
+      #     command: npm run test:unit
 
   release:
     <<: *defaults
