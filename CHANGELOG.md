@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.0.1...grc-hub-frontend-v1.0.2) (2026-05-01)
+
+
+### Bug Fixes
+
+* fix the reference to the projects in the repository ([df1c72c](https://github.com/gridcat/gridcoin.club/commit/df1c72ce5084a5c8e50d7acb275b95a1afff6a80))
+
 ## [1.0.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.0.0...grc-hub-frontend-v1.0.1) (2026-05-01)
 
 
