@@ -73,7 +73,7 @@ export function AboutPage() {
               {' '}
               editing
               {' '}
-              <code>packages/grc-hub-frontend/src/data/projects.ts</code>
+              <code>src/data/projects.ts</code>
               .
               Entries not yet ready can be staged with
               {' '}

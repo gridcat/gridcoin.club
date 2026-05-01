@@ -40,7 +40,7 @@ function buildContent(): string {
 
   lines.push('## Curated Gridcoin projects');
   lines.push('');
-  lines.push('A hand-maintained directory of fellow projects building on or alongside the Gridcoin network. Submit additions via PR against `packages/grc-hub-frontend/src/data/projects.ts`.');
+  lines.push('A hand-maintained directory of fellow projects building on or alongside the Gridcoin network. Submit additions via PR against `src/data/projects.ts`.');
   lines.push('');
   for (const cat of CATEGORY_ORDER) {
     const entries = liveProjects.filter((p) => p.category === cat);

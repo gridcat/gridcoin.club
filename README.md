@@ -49,3 +49,8 @@ This repo uses [Conventional Commits](https://www.conventionalcommits.org/). Use
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+
+---
+
+<p align="center">Made with ❤️ by @gridcat</p>
+
