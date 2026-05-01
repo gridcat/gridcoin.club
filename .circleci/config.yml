@@ -101,6 +101,7 @@ workflows:
   deploy-tag:
     jobs:
       - build_image:
+          context: git-container-registry
           filters:
             branches:
               ignore: /.*/
