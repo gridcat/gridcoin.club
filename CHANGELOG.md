@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.0.0...grc-hub-frontend-v1.0.1) (2026-05-01)
+
+
+### Bug Fixes
+
+* add github context ([f3a050e](https://github.com/gridcat/gridcoin.club/commit/f3a050e67d2e2a807ea5cfd16a0b639ce4c8094f))
+
 # 1.0.0 (2026-04-30)
 
 
