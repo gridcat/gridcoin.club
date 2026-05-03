@@ -7,7 +7,7 @@ import {
 import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
 import { GradientLine } from '@/components/GradientLine';
-import { Seo, SITE_NAME } from '@/components/Seo';
+import { Seo, SITE_NAME, itemListLd } from '@/components/Seo';
 import { PageWrapper } from '@/components/PageWrapper';
 import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
 import { ToolCard } from '@/components/ToolCard';
@@ -59,6 +59,10 @@ export function ToolsPage() {
         title={`Open source tools — ${SITE_NAME}`}
         description="Open source libraries, GitHub Actions, and CLI tools we maintain for the Gridcoin network."
         path="/tools"
+        jsonLd={itemListLd(
+          'Open source tools',
+          visible.map((t) => ({ name: t.name, url: t.repo, description: t.blurb })),
+        )}
       />
       <PageWrapper>
         <Header />

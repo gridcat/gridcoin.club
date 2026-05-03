@@ -6,7 +6,9 @@ import Link from 'next/link';
 import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
 import { GradientLine } from '@/components/GradientLine';
-import { Seo, SITE_NAME } from '@/components/Seo';
+import {
+  Seo, SITE_NAME, organizationLd, websiteLd,
+} from '@/components/Seo';
 import { PageWrapper } from '@/components/PageWrapper';
 import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
 import { ServiceCard } from '@/components/ServiceCard';
@@ -33,6 +35,10 @@ export function HomePage({ liveStats }: HomePageProps) {
         title={`${SITE_NAME} — tools for the Gridcoin network`}
         description="Stamping, payments, a block explorer, and a directory of other community projects on the Gridcoin network."
         path="/"
+        jsonLd={[
+          organizationLd(),
+          websiteLd('Directory of self-hosted tools we run for the Gridcoin network plus a hand-curated index of fellow community projects.'),
+        ]}
       />
       <PageWrapper>
         <Header />

@@ -7,7 +7,7 @@ import {
 import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
 import { GradientLine } from '@/components/GradientLine';
-import { Seo, SITE_NAME } from '@/components/Seo';
+import { Seo, SITE_NAME, itemListLd } from '@/components/Seo';
 import { PageWrapper } from '@/components/PageWrapper';
 import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
 import { ProjectCard } from '@/components/ProjectCard';
@@ -76,6 +76,10 @@ export function ProjectsPage() {
         title={`Curated Gridcoin projects — ${SITE_NAME}`}
         description="Hand-picked directory of community projects built on or alongside the Gridcoin network: wallets, explorers, mining tooling, docs."
         path="/projects"
+        jsonLd={itemListLd(
+          'Curated Gridcoin projects',
+          visible.map((p) => ({ name: p.name, url: p.url, description: p.blurb })),
+        )}
       />
       <PageWrapper>
         <Header />
