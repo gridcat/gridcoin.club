@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.0.2...grc-hub-frontend-v1.1.0) (2026-05-03)
+
+
+### Bug Fixes
+
+* fix 404 page to match other ([26d6fc0](https://github.com/gridcat/gridcoin.club/commit/26d6fc0c14f428cb263fa6a9cd284dd500a94327))
+
+
+### Features
+
+* add llms.txt ([4638b0e](https://github.com/gridcat/gridcoin.club/commit/4638b0e306ee8cf8b761b69a530d9c2f4265db64))
+
 ## [1.0.2](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.0.1...grc-hub-frontend-v1.0.2) (2026-05-01)
 
 
