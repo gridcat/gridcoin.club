@@ -1,3 +1,15 @@
+# [1.3.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.2.0...grc-hub-frontend-v1.3.0) (2026-05-03)
+
+
+### Bug Fixes
+
+* fix the workings ([99331c1](https://github.com/gridcat/gridcoin.club/commit/99331c12dfb4d6503bf359a7560f9746539b22c6))
+
+
+### Features
+
+* a little bit more SEO ([9b641c2](https://github.com/gridcat/gridcoin.club/commit/9b641c2a48b35b52bc0500f28a5441c36f870711))
+
 # [1.2.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.1.0...grc-hub-frontend-v1.2.0) (2026-05-03)
 
 
