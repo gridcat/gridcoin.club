@@ -47,10 +47,7 @@ export function HomePage({ liveStats }: HomePageProps) {
               component="p"
               sx={{ color: 'text.secondary', pb: 4, maxWidth: 720, mx: 'auto' }}
             >
-              Services we run under
-              {' '}
-              <strong>*.gridcoin.club</strong>
-              , plus fellow community projects from around the network.
+              Services and tools we run, plus fellow community projects from around the network.
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap', pt: 2 }}>
               <Button

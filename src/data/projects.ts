@@ -38,7 +38,7 @@ export const projects: ProjectEntity[] = [
   {
     name: 'testnet.gridcoinstats.eu',
     url: 'https://testnet.gridcoinstats.eu',
-    blurb: 'Testnet sibling of gridcoinstats.eu — block explorer, stats, and testnet faucet.',
+    blurb: 'Testnet sibling of gridcoinstats.eu: block explorer, stats, and testnet faucet.',
     category: 'stats',
     tags: ['explorer', 'testnet', 'faucet'],
     status: 'live',
@@ -64,7 +64,7 @@ export const projects: ProjectEntity[] = [
   {
     name: 'BOINC',
     url: 'https://boinc.berkeley.edu',
-    blurb: 'Volunteer computing platform that Gridcoin rewards participation in.',
+    blurb: 'Volunteer computing platform. Gridcoin rewards participation with GRC.',
     category: 'mining',
     tags: ['boinc'],
     status: 'live',
@@ -73,7 +73,7 @@ export const projects: ProjectEntity[] = [
   {
     name: 'GRC Pool',
     url: 'https://www.grcpool.com',
-    blurb: 'Long-running Gridcoin mining pool aggregating BOINC contributions and distributing GRC rewards by magnitude share.',
+    blurb: 'Long-running Gridcoin mining pool. Aggregates BOINC contributions and pays GRC rewards by magnitude share.',
     category: 'pools',
     tags: ['boinc'],
     status: 'live',
@@ -82,7 +82,7 @@ export const projects: ProjectEntity[] = [
   {
     name: 'Gridcoin Switzerland',
     url: 'https://gridcoin.ch',
-    blurb: 'Daily Gridcoin faucet plus network statistics dashboards — free GRC every day for newcomers.',
+    blurb: 'Daily Gridcoin faucet plus network statistics dashboards. Free GRC every day for newcomers.',
     category: 'tool',
     tags: ['faucet', 'stats'],
     status: 'live',

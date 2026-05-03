@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from 'next';
 import { services } from '@/data/services';
 import { projects } from '@/data/projects';
+import { tools } from '@/data/tools';
 import { CATEGORY_LABELS, CATEGORY_ORDER } from '@/entities/ProjectEntity';
 
 // /llms.txt is a curated, plain-text summary of the site for LLMs / AEO.
@@ -15,6 +16,7 @@ import { CATEGORY_LABELS, CATEGORY_ORDER } from '@/entities/ProjectEntity';
 function buildContent(): string {
   const liveServices = services.filter((s) => s.status === 'live');
   const soonServices = services.filter((s) => s.status === 'soon');
+  const liveTools = tools.filter((t) => t.status === 'live');
   const liveProjects = projects.filter((p) => p.status === 'live');
 
   const lines: string[] = [];
@@ -22,7 +24,7 @@ function buildContent(): string {
   lines.push('');
   lines.push('> Apex hub at gridcoin.club. A directory of self-hosted tools we run for the Gridcoin network plus a hand-curated index of fellow community projects.');
   lines.push('');
-  lines.push('Gridcoin Club is a thin front door: each tool we run lives on its own subdomain under *.gridcoin.club. The home page server-renders fresh stats pulled from sibling APIs at request time so first paint already shows real numbers — no client hydration flash, no JS-required content, fully indexable. Privacy-first: no cookies for tracking, only privacy-friendly Plausible Analytics.');
+  lines.push('Gridcoin Club is a thin front door: each tool we run lives on its own subdomain with its own API. The home page server-renders fresh stats pulled from sibling APIs at request time, so first paint already shows real numbers: no client hydration flash, no JS-required content, fully indexable. Privacy-first: no cookies for tracking, only privacy-friendly Plausible Analytics.');
   lines.push('');
 
   lines.push('## Services we run');
@@ -34,6 +36,15 @@ function buildContent(): string {
     lines.push(`- [${s.name}](${s.url}): ${s.tagline} (coming soon)`);
   }
   lines.push('');
+
+  if (liveTools.length > 0) {
+    lines.push('## Tools we maintain');
+    lines.push('');
+    for (const t of liveTools) {
+      lines.push(`- [${t.name}](${t.repo}): ${t.blurb}`);
+    }
+    lines.push('');
+  }
 
   for (const cat of CATEGORY_ORDER) {
     const entries = liveProjects.filter((p) => p.category === cat);
@@ -48,7 +59,8 @@ function buildContent(): string {
 
   lines.push('## Pages');
   lines.push('');
-  lines.push('- [Home](https://gridcoin.club/): hero stats from sibling APIs, our-tools grid, fellow-projects teaser');
+  lines.push('- [Home](https://gridcoin.club/): live stats from sibling APIs, our services, our open source tools, and a teaser of fellow community projects');
+  lines.push('- [Tools](https://gridcoin.club/tools): open source libraries, GitHub Actions, and CLIs we maintain, with tag filtering');
   lines.push('- [Curated projects](https://gridcoin.club/projects): full directory grouped by category, with tag filtering');
   lines.push('- [About](https://gridcoin.club/about): what Gridcoin Club is, who runs it, how to suggest a project');
   lines.push('');

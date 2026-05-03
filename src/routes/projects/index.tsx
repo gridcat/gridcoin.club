@@ -74,7 +74,7 @@ export function ProjectsPage() {
     <>
       <Seo
         title={`Curated Gridcoin projects — ${SITE_NAME}`}
-        description="Hand-picked directory of community projects built on or alongside the Gridcoin network — wallets, explorers, mining tooling, docs and more."
+        description="Hand-picked directory of community projects built on or alongside the Gridcoin network: wallets, explorers, mining tooling, docs."
         path="/projects"
       />
       <PageWrapper>
@@ -85,7 +85,7 @@ export function ProjectsPage() {
             Curated projects
           </Typography>
           <Typography variant="body1" sx={{ color: 'text.secondary', pb: 4, maxWidth: 720 }}>
-            Fellow Gridcoin projects we admire. Hand-maintained — submit a PR to add yours.
+            Fellow Gridcoin projects we admire. Hand-maintained: submit a PR to add yours.
           </Typography>
 
           <TagFilter

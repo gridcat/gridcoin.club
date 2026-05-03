@@ -32,10 +32,6 @@ export function AboutPage() {
               {' '}
               is a community-run hub for tools built around the Gridcoin network.
               The site itself is deliberately thin: each tool lives on its own subdomain
-              under
-              {' '}
-              <code>*.gridcoin.club</code>
-              {' '}
               with its own API, and every tool is open source and runs without depending
               on this hub. We keep it that way so the directory can grow without becoming
               a single point of failure.
@@ -100,11 +96,7 @@ export function AboutPage() {
                 @gridcat
               </NextMuiLink>
               {' '}
-              alongside the rest of the
-              {' '}
-              <code>*.gridcoin.club</code>
-              {' '}
-              sites.
+              alongside the other sites we run.
               The source is MIT-licensed and lives at
               {' '}
               <NextMuiLink

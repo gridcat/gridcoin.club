@@ -1,8 +1,8 @@
 import type { ServiceEntity } from '@/entities/ServiceEntity';
 
-// Our own services running under *.gridcoin.club. Add new entries here as
-// they come online; flip `status` from 'hidden' to 'soon' to reveal a
-// coming-soon tile, or to 'live' to show the full SSR'd live-stat tile.
+// First-party services we run. Add new entries here as they come online;
+// flip `status` from 'hidden' to 'soon' to reveal a coming-soon tile, or
+// to 'live' to show the full SSR'd live-stat tile.
 //
 // Status today: only stamp is publicly live; the rest render as "coming
 // soon" tiles until their public launches. The `liveSource` is preserved

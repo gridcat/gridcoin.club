@@ -8,7 +8,7 @@ export const tools: ToolEntity[] = [
   {
     slug: 'gridcoin-rpc',
     name: 'gridcoin-rpc',
-    blurb: 'Promise-based JSON-RPC client for the Gridcoin wallet daemon. Typed methods, thin proxy over the daemon RPC.',
+    blurb: 'Promise-based JSON-RPC client for the Gridcoin wallet daemon with typed methods. The library is a thin proxy: validation happens at the daemon, not here.',
     repo: 'https://github.com/gridcat/gridcoin-rpc',
     tags: ['library', 'typescript', 'rpc'],
     status: 'live',
@@ -16,7 +16,7 @@ export const tools: ToolEntity[] = [
   {
     slug: 'gridcoin-stamp-action',
     name: 'gridcoin-stamp-action',
-    blurb: 'GitHub Action that timestamps your release artifacts on the Gridcoin blockchain via stamp.gridcoin.club, with byte-stable proofs.',
+    blurb: 'GitHub Action that timestamps your release artifacts on the Gridcoin blockchain via stamp.gridcoin.club. Re-uploads source archives as fixed assets first, so the bytes you stamp stay verifiable years later.',
     repo: 'https://github.com/gridcat/gridcoin-stamp-action',
     tags: ['github-action', 'typescript', 'ci', 'stamping'],
     status: 'live',
@@ -24,7 +24,7 @@ export const tools: ToolEntity[] = [
   {
     slug: 'gridcoinresearch-tui',
     name: 'gridcoinresearch-tui',
-    blurb: 'Terminal UI wrapper for a running Gridcoin Research wallet — balance, staking status, send. Single static Go binary.',
+    blurb: 'Terminal UI for a running Gridcoin Research wallet. Shows your balance, staking status, and recent transactions; sends GRC from there. Ships as a single static Go binary.',
     repo: 'https://github.com/gridcat/gridcoinresearch-tui',
     tags: ['cli', 'tui', 'go', 'wallet'],
     status: 'live',

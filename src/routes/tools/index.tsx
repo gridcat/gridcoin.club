@@ -57,7 +57,7 @@ export function ToolsPage() {
     <>
       <Seo
         title={`Open source tools — ${SITE_NAME}`}
-        description="Open source libraries, GitHub Actions, and CLI tools we maintain on github.com/gridcat for the Gridcoin network."
+        description="Open source libraries, GitHub Actions, and CLI tools we maintain for the Gridcoin network."
         path="/tools"
       />
       <PageWrapper>
@@ -68,10 +68,7 @@ export function ToolsPage() {
             Tools
           </Typography>
           <Typography variant="body1" sx={{ color: 'text.secondary', pb: 4, maxWidth: 720 }}>
-            Open source libraries, GitHub Actions, and CLIs we maintain on
-            {' '}
-            <strong>github.com/gridcat</strong>
-            . Use them, fork them, send patches.
+            Open source libraries, GitHub Actions, and CLIs we maintain. Patches welcome.
           </Typography>
 
           <TagFilter
@@ -81,6 +78,7 @@ export function ToolsPage() {
             onClear={clearTags}
             visibleCount={filtered.length}
             totalCount={visible.length}
+            noun="tool"
           />
 
           <Grid container spacing={2}>

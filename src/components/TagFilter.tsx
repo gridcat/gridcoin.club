@@ -14,11 +14,16 @@ interface TagFilterProps {
   onClear: () => void;
   visibleCount: number;
   totalCount: number;
+  // Singular noun for what's being filtered ('project', 'tool', ...). Used
+  // in the count line; auto-pluralized with a trailing 's' for the
+  // English-only copy here.
+  noun?: string;
 }
 
 export function TagFilter({
-  tags, active, onToggle, onClear, visibleCount, totalCount,
+  tags, active, onToggle, onClear, visibleCount, totalCount, noun = 'project',
 }: TagFilterProps) {
+  const plural = `${noun}s`;
   const hasActive = active.size > 0;
 
   return (
@@ -86,8 +91,8 @@ export function TagFilter({
         aria-live="polite"
       >
         {hasActive
-          ? `Showing ${visibleCount} of ${totalCount} projects`
-          : `${totalCount} projects`}
+          ? `Showing ${visibleCount} of ${totalCount} ${plural}`
+          : `${totalCount} ${plural}`}
       </Typography>
     </Box>
   );
