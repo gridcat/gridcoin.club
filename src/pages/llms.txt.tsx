@@ -7,11 +7,14 @@ import { CATEGORY_LABELS, CATEGORY_ORDER } from '@/entities/ProjectEntity';
 // Generated from the same data files that power the home and projects
 // pages, so it stays fresh as services and curated projects evolve.
 //
-// See https://llmstxt.org/ for the convention.
+// Format follows https://llmstxt.org/ strictly: H1 title, blockquote
+// summary, optional intro prose, then H2-delimited sections whose bodies
+// are bulleted lists of `[name](url): notes`. An `## Optional` section at
+// the end holds links an LLM may safely skip when context is tight.
 
 function buildContent(): string {
   const liveServices = services.filter((s) => s.status === 'live');
-  const upcomingServices = services.filter((s) => s.status === 'soon');
+  const soonServices = services.filter((s) => s.status === 'soon');
   const liveProjects = projects.filter((p) => p.status === 'live');
 
   const lines: string[] = [];
@@ -22,30 +25,20 @@ function buildContent(): string {
   lines.push('Gridcoin Club is a thin front door: each tool we run lives on its own subdomain under *.gridcoin.club. The home page server-renders fresh stats pulled from sibling APIs at request time so first paint already shows real numbers — no client hydration flash, no JS-required content, fully indexable. Privacy-first: no cookies for tracking, only privacy-friendly Plausible Analytics.');
   lines.push('');
 
-  lines.push('## Services we run (*.gridcoin.club)');
+  lines.push('## Services we run');
   lines.push('');
   for (const s of liveServices) {
     lines.push(`- [${s.name}](${s.url}): ${s.tagline}`);
   }
-  lines.push('');
-
-  if (upcomingServices.length > 0) {
-    lines.push('## Coming soon');
-    lines.push('');
-    for (const s of upcomingServices) {
-      lines.push(`- ${s.name}: ${s.tagline}`);
-    }
-    lines.push('');
+  for (const s of soonServices) {
+    lines.push(`- [${s.name}](${s.url}): ${s.tagline} (coming soon)`);
   }
+  lines.push('');
 
-  lines.push('## Curated Gridcoin projects');
-  lines.push('');
-  lines.push('A hand-maintained directory of fellow projects building on or alongside the Gridcoin network. Submit additions via PR against `src/data/projects.ts`.');
-  lines.push('');
   for (const cat of CATEGORY_ORDER) {
     const entries = liveProjects.filter((p) => p.category === cat);
     if (entries.length === 0) continue;
-    lines.push(`### ${CATEGORY_LABELS[cat]}`);
+    lines.push(`## ${CATEGORY_LABELS[cat]}`);
     lines.push('');
     for (const p of entries) {
       lines.push(`- [${p.name}](${p.url}): ${p.blurb}`);
@@ -53,18 +46,17 @@ function buildContent(): string {
     lines.push('');
   }
 
-  lines.push('## Source & stewardship');
-  lines.push('');
-  lines.push('- Source: https://github.com/gridcat/gridcoin.club');
-  lines.push('- Maintainer: @gridcat (https://github.com/gridcat)');
-  lines.push('- License: MIT');
-  lines.push('');
-
   lines.push('## Pages');
   lines.push('');
-  lines.push('- `/` — Home: hero stats from sibling APIs, our-tools grid, fellow-projects teaser');
-  lines.push('- `/projects` — Full curated directory grouped by category');
-  lines.push('- `/about` — What Gridcoin Club is, who runs it, how to suggest a project');
+  lines.push('- [Home](https://gridcoin.club/): hero stats from sibling APIs, our-tools grid, fellow-projects teaser');
+  lines.push('- [Curated projects](https://gridcoin.club/projects): full directory grouped by category, with tag filtering');
+  lines.push('- [About](https://gridcoin.club/about): what Gridcoin Club is, who runs it, how to suggest a project');
+  lines.push('');
+
+  lines.push('## Optional');
+  lines.push('');
+  lines.push('- [Source code](https://github.com/gridcat/gridcoin.club): hub repo on GitHub, MIT-licensed');
+  lines.push('- [Maintainer](https://github.com/gridcat): @gridcat — open a PR against `src/data/projects.ts` to suggest additions');
   lines.push('');
 
   return lines.join('\n');
