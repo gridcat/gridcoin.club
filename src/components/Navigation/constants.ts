@@ -16,6 +16,7 @@ export const isMenuGroup = (entry: MenuEntry): entry is MenuGroup => (
 
 export const menuItems: MenuEntry[] = [
   { label: 'Home', href: '/' },
+  { label: 'Tools', href: '/tools' },
   { label: 'Projects', href: '/projects' },
   { label: 'About', href: '/about' },
 ];

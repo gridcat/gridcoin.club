@@ -44,7 +44,7 @@ export function Footer() {
       <Grid container spacing={0} sx={{ mt: 2, mb: 2 }}>
         <Grid size={{ xs: 12, md: 6 }}>
           <FooterTextTypography variant="caption">
-            The front door for the Gridcoin Club family.
+            The front door for our Gridcoin tools and services.
           </FooterTextTypography>
           <FooterTextTypography variant="caption" sx={{ color: 'text.disabled' }}>
             Privacy-first by design.

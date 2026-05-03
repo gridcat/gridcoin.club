@@ -20,7 +20,7 @@ function buildContent(): string {
   const lines: string[] = [];
   lines.push('# Gridcoin Club');
   lines.push('');
-  lines.push('> Apex hub at gridcoin.club for the Gridcoin Club family. A directory of self-hosted tools we run for the Gridcoin network plus a hand-curated index of fellow community projects.');
+  lines.push('> Apex hub at gridcoin.club. A directory of self-hosted tools we run for the Gridcoin network plus a hand-curated index of fellow community projects.');
   lines.push('');
   lines.push('Gridcoin Club is a thin front door: each tool we run lives on its own subdomain under *.gridcoin.club. The home page server-renders fresh stats pulled from sibling APIs at request time so first paint already shows real numbers — no client hydration flash, no JS-required content, fully indexable. Privacy-first: no cookies for tracking, only privacy-friendly Plausible Analytics.');
   lines.push('');

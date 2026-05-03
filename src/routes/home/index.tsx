@@ -12,9 +12,11 @@ import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
 import { ServiceCard } from '@/components/ServiceCard';
 import { ComingSoonCard } from '@/components/ComingSoonCard';
 import { ProjectCard } from '@/components/ProjectCard';
+import { ToolCard } from '@/components/ToolCard';
 import type { LiveStats } from '@/lib/sources';
 import { services } from '@/data/services';
 import { projects } from '@/data/projects';
+import { tools } from '@/data/tools';
 import { plausibleClass } from '@/lib/plausible';
 
 interface HomePageProps {
@@ -23,6 +25,7 @@ interface HomePageProps {
 
 export function HomePage({ liveStats }: HomePageProps) {
   const visibleServices = services.filter((s) => s.status !== 'hidden');
+  const visibleTools = tools.filter((t) => t.status !== 'hidden');
   const teaser = projects.filter((p) => p.status === 'live').slice(0, 6);
   return (
     <>
@@ -75,7 +78,7 @@ export function HomePage({ liveStats }: HomePageProps) {
 
           <Box sx={{ pb: 2 }}>
             <Typography variant="h5" component="h2" sx={{ fontWeight: 700, pb: 2 }}>
-              Our tools
+              Our services
             </Typography>
             <Grid container spacing={3}>
               {visibleServices.map((service) => (
@@ -87,6 +90,32 @@ export function HomePage({ liveStats }: HomePageProps) {
               ))}
             </Grid>
           </Box>
+
+          {visibleTools.length > 0 && (
+            <Box sx={{ pt: 6, pb: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', pb: 2 }}>
+                <Typography variant="h5" component="h2" sx={{ fontWeight: 700 }}>
+                  Our tools
+                </Typography>
+                <Button
+                  component={Link}
+                  href="/tools"
+                  size="small"
+                  color="primary"
+                  className={plausibleClass('Tools See All', { from: 'home-teaser' })}
+                >
+                  See all →
+                </Button>
+              </Box>
+              <Grid container spacing={2}>
+                {visibleTools.slice(0, 6).map((t) => (
+                  <Grid key={t.slug} size={{ xs: 12, sm: 6, md: 4 }}>
+                    <ToolCard tool={t} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          )}
 
           <Box sx={{ pt: 6, pb: 2 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', pb: 2 }}>
