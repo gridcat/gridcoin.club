@@ -8,6 +8,7 @@ RUN npm ci
 # Rebuild the source code only when needed
 FROM node:22.16.0-alpine3.22 AS builder
 WORKDIR /app
+ENV NEXT_TELEMETRY_DISABLED 1
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 RUN npm run build && npm install --production --ignore-scripts --prefer-offline
