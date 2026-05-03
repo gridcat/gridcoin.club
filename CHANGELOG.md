@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.1.0...grc-hub-frontend-v1.2.0) (2026-05-03)
+
+
+### Bug Fixes
+
+* enablePlausibe analytics ([429c6ff](https://github.com/gridcat/gridcoin.club/commit/429c6ffc72b8be74f52d217e76b06fd57d843b64))
+
+
+### Features
+
+* add links to our tools ([0cdb490](https://github.com/gridcat/gridcoin.club/commit/0cdb49014ecd988f87472842a0a72a989441cced))
+
 # [1.1.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.0.2...grc-hub-frontend-v1.1.0) (2026-05-03)
 
 
