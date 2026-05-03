@@ -3,10 +3,21 @@ import {
   Container, Box, Typography, Button,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Seo } from '@/components/Seo';
 import { PageWrapper } from '@/components/PageWrapper';
 import { plausibleClass } from '@/lib/plausible';
+
+const PageBody = styled(Box)(() => ({
+  backgroundImage: 'url(/il-background-error-page.svg)',
+  backgroundSize: 'cover',
+}));
+
+const NotFoundError = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.contrastText,
+  padding: theme.spacing(5),
+}));
 
 const ErrorContainer = styled(Container)(() => ({
   flexGrow: 1,
@@ -19,7 +30,7 @@ const ErrorContainer = styled(Container)(() => ({
 
 export function NotFound() {
   return (
-    <Box>
+    <PageBody>
       <Seo
         title="Page Not Found"
         description="The page you were looking for does not exist."
@@ -27,23 +38,27 @@ export function NotFound() {
         noindex
       />
       <PageWrapper>
-        <ErrorContainer maxWidth="md">
-          <Typography variant="h1" sx={{ fontWeight: 900, color: 'primary.main' }}>
-            404
-          </Typography>
-          <Typography variant="h5" sx={{ pb: 4, color: 'text.secondary' }}>
-            Looks like this corner of the club is empty.
-          </Typography>
+        <ErrorContainer maxWidth="xl">
+          <Image
+            src="/ic-error.svg"
+            width={244}
+            height={310}
+            alt="Major Tom"
+            priority
+          />
+          <NotFoundError variant="h4" color="inherit">
+            This page has been eaten by Major Tom!
+          </NotFoundError>
           <Link href="/" passHref>
             <Button
               variant="contained"
               className={plausibleClass('404 Recover')}
             >
-              Take me home
+              Ground control, bring me home.
             </Button>
           </Link>
         </ErrorContainer>
       </PageWrapper>
-    </Box>
+    </PageBody>
   );
 }
