@@ -1,6 +1,6 @@
 export type ServiceStatus = 'live' | 'soon' | 'hidden';
 
-export type LiveSource = 'stamp' | 'explorer' | 'testnetExplorer' | 'grcpay';
+export type LiveSource = 'stamp' | 'explorer' | 'grcpay';
 
 export interface ServiceEntity {
   slug: string;

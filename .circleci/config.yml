@@ -26,6 +26,9 @@ jobs:
           paths:
             - ~/app/node_modules
       - run:
+          name: Audit production dependencies for known vulnerabilities
+          command: npm audit --audit-level=high --omit=dev
+      - run:
           name: Lint
           command: npm run test:lint
       - run:

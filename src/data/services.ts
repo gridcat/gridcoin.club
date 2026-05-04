@@ -36,13 +36,4 @@ export const services: ServiceEntity[] = [
     status: 'soon',
     liveSource: 'explorer',
   },
-  {
-    slug: 'testnet-explorer',
-    name: 'Testnet Explorer',
-    tagline: 'Block explorer for the Gridcoin testnet.',
-    url: 'https://testnet-explorer.gridcoin.club',
-    color: '#ef6c00',
-    status: 'soon',
-    liveSource: 'testnetExplorer',
-  },
 ];

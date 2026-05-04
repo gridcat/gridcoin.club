@@ -32,11 +32,8 @@ function renderLiveStat(service: ServiceEntity, stats: LiveStats): React.ReactNo
         />
       );
     }
-    case 'explorer':
-    case 'testnetExplorer': {
-      const s = service.liveSource === 'explorer'
-        ? stats.explorer
-        : stats.testnetExplorer;
+    case 'explorer': {
+      const s = stats.explorer;
       if (!s || s.height == null) return <LiveStat label="explorer" value="" unavailable />;
       return (
         <LiveStat

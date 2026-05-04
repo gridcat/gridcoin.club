@@ -36,8 +36,3 @@ export async function fetchExplorerStats(
   };
 }
 
-export function fetchTestnetExplorerStats(): Promise<ExplorerStats> {
-  return fetchExplorerStats(
-    process.env.TESTNET_EXPLORER_API_URL || 'https://testnet-explorer.gridcoin.club/api',
-  );
-}
