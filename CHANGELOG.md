@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.4.0...grc-hub-frontend-v1.4.1) (2026-05-05)
+
+
+### Bug Fixes
+
+* add security headers ([469d5b2](https://github.com/gridcat/gridcoin.club/commit/469d5b29a7ed6b2a9b4d6687d54e1273bc778582))
+
 # [1.4.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.3.0...grc-hub-frontend-v1.4.0) (2026-05-04)
 
 
