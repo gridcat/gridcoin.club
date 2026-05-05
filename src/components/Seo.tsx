@@ -70,10 +70,8 @@ export function Seo({
 
       {ldBlocks.map((block, idx) => (
         <script
-          // JSON.stringify on a server-built object: not user input, no XSS
-          // surface. Standard Next.js pattern for schema.org markup.
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(block) }}
           key={`ld-${idx}`}
           type="application/ld+json"
         />
@@ -86,6 +84,15 @@ export function Seo({
 // Schema.org shapes used across the hub. Centralized so every page emits
 // the same Organization/WebSite identity, and so ItemList payloads stay in
 // sync with the visible directory.
+
+// Escape `<`, U+2028, U+2029 so the payload can't break out of <script>
+// or HTML parsing if a future data entry ever contains those bytes.
+function serializeJsonLd(block: object): string {
+  return JSON.stringify(block)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
 
 export function organizationLd() {
   return {
