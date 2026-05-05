@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.3.0...grc-hub-frontend-v1.4.0) (2026-05-04)
+
+
+### Features
+
+* harden deps and remove test explorer ([2e248b1](https://github.com/gridcat/gridcoin.club/commit/2e248b1e1bb7c3b8e81228d43cb4ab93d5b30eb7))
+
 # [1.3.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.2.0...grc-hub-frontend-v1.3.0) (2026-05-03)
 
 
