@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.4.1...grc-hub-frontend-v1.5.0) (2026-06-03)
+
+
+### Features
+
+* add grcbazaar to the list of services ([23bd645](https://github.com/gridcat/gridcoin.club/commit/23bd6456afa38a953d4692f6a8ac047d22ee79d3))
+
 ## [1.4.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.4.0...grc-hub-frontend-v1.4.1) (2026-05-05)
 
 
