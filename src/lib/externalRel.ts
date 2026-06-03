@@ -5,6 +5,7 @@
 // Whitelisted (dofollow):
 //   - gridcoin.us
 //   - gridcoin.club and any *.gridcoin.club subdomain
+//   - grcbazaar.com (our marketplace — own property on its own apex domain)
 //   - github.com/gridcat/* (gridcat's repos)
 //   - github.com/gridcoin-community/* (community repos)
 
@@ -15,6 +16,7 @@ function isDofollowHost(host: string): boolean {
     host === 'gridcoin.us'
     || host === 'gridcoin.club'
     || host.endsWith('.gridcoin.club')
+    || host === 'grcbazaar.com'
   );
 }
 

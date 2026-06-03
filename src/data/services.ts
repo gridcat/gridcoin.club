@@ -36,4 +36,15 @@ export const services: ServiceEntity[] = [
     status: 'soon',
     liveSource: 'explorer',
   },
+  {
+    slug: 'grcbazaar',
+    name: 'grcbazaar',
+    tagline: 'Community marketplace for Gridcoin. Buy and sell peer-to-peer, pay in GRC.',
+    url: 'https://grcbazaar.com',
+    color: '#2C74B0',
+    status: 'live',
+    // No liveSource: grcbazaar exposes no public stat endpoint, so the
+    // tile renders without a live-stat line (ServiceCard handles a
+    // missing source by omitting the stat row).
+  },
 ];
