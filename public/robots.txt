@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://gridcoin.club/sitemap.xml
+
+llms.txt: https://gridcoin.club/llms.txt
