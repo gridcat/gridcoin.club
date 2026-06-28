@@ -23,8 +23,9 @@ export default class MyDocument extends Document {
           <link rel="preconnect" href="https://daj.pw" crossOrigin="anonymous" />
           <link rel="dns-prefetch" href="https://stamp.gridcoin.club" />
           <link rel="dns-prefetch" href="https://grcpay.gridcoin.club" />
-          <link rel="dns-prefetch" href="https://explorer.gridcoin.club" />
+          {/* <link rel="dns-prefetch" href="https://explorer.gridcoin.club" /> */}
           <link rel="dns-prefetch" href="https://gridcoinstats.eu" />
+          <link rel="dns-prefetch" href="https://grcbazaar.com" />
         </Head>
         <body>
           <Main />
@@ -51,7 +52,7 @@ MyDocument.getInitialProps = async (ctx) => {
     <style
       data-emotion={`${style.key} ${style.ids.join(' ')}`}
       key={style.key}
-      // eslint-disable-next-line react/no-danger
+       
       dangerouslySetInnerHTML={{ __html: style.css }}
     />
   ));
