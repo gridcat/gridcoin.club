@@ -9,6 +9,7 @@ import { Seo, SITE_NAME } from '@/components/Seo';
 import { PageWrapper } from '@/components/PageWrapper';
 import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
 import { NextMuiLink } from '@/components/NextMuiLink';
+import { DonationAddress } from '@/components/DonationAddress';
 import { plausibleClass } from '@/lib/plausible';
 
 export function AboutPage() {
@@ -111,6 +112,15 @@ export function AboutPage() {
               </NextMuiLink>
               .
             </Typography>
+            <Typography variant="h5" component="h2" sx={{ fontWeight: 700, pt: 3, pb: 1 }}>
+              Support our work
+            </Typography>
+            <Typography variant="body1" component="p">
+              Everything here is free to use and runs on hardware and hosting we
+              pay for ourselves. If these tools are useful to you, a Gridcoin
+              donation helps keep the lights on:
+            </Typography>
+            <DonationAddress address="SJVaQcJriv7N8Py8eWjNUtWPTPBtDZashD" />
           </Box>
         </Container>
         <Footer />
