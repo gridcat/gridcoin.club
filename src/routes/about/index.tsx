@@ -34,13 +34,10 @@ export function AboutPage() {
               is a community-run hub for tools built around the Gridcoin network.
               The site itself is deliberately thin: each tool lives on its own subdomain
               with its own API, and every tool is open source and runs without depending
-              on this hub. We keep it that way so the directory can grow without becoming
-              a single point of failure.
+              on this hub.
             </Typography>
             <Typography variant="body1" component="p">
-              No third-party trackers, no marketing cookies. The home page is server-rendered,
-              with stats pulled from sibling APIs at request time, so the tool tiles work without
-              JavaScript. The only analytics we run is Plausible, self-hosted and cookieless.
+              No third-party trackers, no marketing cookies. The only analytics we run is Plausible, self-hosted and cookieless.
             </Typography>
             <Typography variant="h5" component="h2" sx={{ fontWeight: 700, pt: 3, pb: 1 }}>
               Suggest a project
