@@ -1,3 +1,16 @@
+# [1.6.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.5.0...grc-hub-frontend-v1.6.0) (2026-06-28)
+
+
+### Bug Fixes
+
+* remove explorer as inactive ([8cb3bca](https://github.com/gridcat/gridcoin.club/commit/8cb3bca1cd3adc1c8821798865f3028bc7ad976f))
+
+
+### Features
+
+* add donation address ([608e670](https://github.com/gridcat/gridcoin.club/commit/608e670ecd17ec4527a1ae9958adabf3664fb2c7))
+* add link to llms.txt ([ecd4fdc](https://github.com/gridcat/gridcoin.club/commit/ecd4fdc20667595df69bf30689ab51ae92e73b60))
+
 # [1.5.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.4.1...grc-hub-frontend-v1.5.0) (2026-06-03)
 
 
