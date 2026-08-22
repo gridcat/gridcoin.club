@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.7.0...grc-hub-frontend-v1.7.1) (2026-08-22)
+
+
+### Bug Fixes
+
+* number of nodes tyo ask for from the rpc ([d58a46b](https://github.com/gridcat/gridcoin.club/commit/d58a46b4f59e0d3b9d42227522dad5114f2d21f9))
+
 # [1.7.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.6.1...grc-hub-frontend-v1.7.0) (2026-08-22)
 
 
