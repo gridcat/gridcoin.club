@@ -75,12 +75,26 @@ describe('renderTxt', () => {
     }
   });
 
-  it('keeps the cycy section headers so existing readers still parse it', () => {
+  it('keeps the header an existing reader recognises', () => {
     const txt = renderTxt(selection, generatedAt);
-    expect(txt).toContain('# Online (');
-    expect(txt).toContain('# Unreachable (');
     expect(txt).toContain('Gridcoin Addnodes');
     expect(txt).toContain('Last updated:');
+  });
+
+  it('publishes only nodes that answered', () => {
+    // The wallet ignores # comments, so a heading cannot stop it dialling an
+    // address below one. Anything in this file is a peer it will spend
+    // connection attempts on, so unreachable entries stay out of it.
+    const txt = renderTxt(selection, generatedAt);
+    expect(txt).toContain('addnode=198.51.100.7');
+    expect(txt).not.toContain('192.0.2.9');
+    expect(txt).not.toContain('Unreachable');
+  });
+
+  it('still hands the unreachable tier to tools through the JSON', () => {
+    const json = JSON.parse(renderCappedJson('main', selection, generatedAt));
+    expect(json.unreachable).toHaveLength(1);
+    expect(json.unreachable[0].host).toBe('192.0.2.9');
   });
 
   it('points at the delisting page in the header', () => {

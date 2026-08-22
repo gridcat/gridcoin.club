@@ -95,20 +95,26 @@ function header(generatedAt: Date): string {
   ].join('\n');
 }
 
+/**
+ * The conf file. Verified-reachable entries ONLY.
+ *
+ * This deliberately does not carry the `unreachable` tier, even though the
+ * JSON does. The file gets `cat`ed straight into gridcoinresearch.conf, and
+ * the wallet ignores `#` comments: every addnode= line is a peer it will
+ * spend connection attempts on, whichever heading sat above it. Publishing
+ * addresses we know did not answer would quietly spend those attempts on
+ * hosts we already know are not listening, and we have a large surplus of
+ * ones that did answer.
+ *
+ * A tool that wants the second tier can read it from mainnet.json, where the
+ * distinction survives because the consumer can see it.
+ */
 export function renderTxt(selection: Selection, generatedAt: Date): string {
   const parts = [header(generatedAt), ''];
 
-  parts.push('# Online (answered a connection within the last hour):');
+  parts.push('# Answered a connection when this file was generated:');
   if (selection.online.length) {
     parts.push(...selection.online.map(confLine));
-  } else {
-    parts.push('# (none)');
-  }
-  parts.push('');
-
-  parts.push('# Unreachable (offline, or already at max connections):');
-  if (selection.unreachable.length) {
-    parts.push(...selection.unreachable.map(confLine));
   } else {
     parts.push('# (none)');
   }

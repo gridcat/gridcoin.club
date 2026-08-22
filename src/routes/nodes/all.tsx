@@ -252,12 +252,14 @@ export function AllNodesPage(props: AllNodesPageProps) {
               color: 'text.secondary', textAlign: 'center', pb: 4, mx: 'auto', maxWidth: 660,
             }}
           >
-            One dot per node, placed by city where the address resolves to one
-            and at the centre of its country where it does not. Machines
-            sharing a location are fanned out around it so they do not stack
-            into a single dot — that fan is spacing, not position. Scroll or
-            use the buttons to zoom, drag to pan. IP geolocation is inexact by
-            nature and none of this is verified against the operator.
+            Each node gets one dot. Where the address resolves to a city the
+            dot sits there, and where it does not it falls back to the middle
+            of the country. Machines that resolve to the same place are fanned
+            out around that point so they do not pile into one dot, so the
+            width of a cluster counts machines and says nothing about how far
+            apart they are. Scroll or use the buttons to zoom, and drag to
+            pan. IP geolocation is rough at the best of times, and we never
+            check it against whoever runs the node.
             {' '}
             <NextMuiLink href="https://db-ip.com">IP Geolocation by DB-IP</NextMuiLink>
             .
