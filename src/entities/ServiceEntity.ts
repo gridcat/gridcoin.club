@@ -1,6 +1,6 @@
 export type ServiceStatus = 'live' | 'soon' | 'hidden';
 
-export type LiveSource = 'stamp' | 'explorer' | 'grcpay';
+export type LiveSource = 'stamp' | 'explorer' | 'grcpay' | 'addnodes';
 
 export interface ServiceEntity {
   slug: string;

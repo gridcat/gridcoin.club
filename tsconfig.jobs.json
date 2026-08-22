@@ -1,0 +1,34 @@
+{
+  // Build config for the standalone job runner (src/jobs + src/server).
+  //
+  // The root tsconfig targets the browser and never emits — it exists for
+  // Next and for `typecheck`. The job is a plain Node process invoked as
+  // `node dist/jobs/addnodes.js`, so it needs CommonJS output, a modern
+  // target, and real emit.
+  //
+  // Note there is no `paths` mapping here on purpose: `@/*` is a bundler
+  // alias that nothing resolves at runtime under plain node. Everything
+  // under src/server and src/jobs therefore imports relatively.
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["es2022"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": false,
+    "sourceMap": false,
+    "noEmit": false,
+    "incremental": false,
+    "types": ["node"]
+  },
+  "include": [
+    "src/server/**/*.ts",
+    "src/jobs/**/*.ts"
+  ]
+}

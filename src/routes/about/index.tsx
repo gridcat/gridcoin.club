@@ -10,6 +10,8 @@ import { PageWrapper } from '@/components/PageWrapper';
 import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
 import { NextMuiLink } from '@/components/NextMuiLink';
 import { DonationAddress } from '@/components/DonationAddress';
+import { CopyableValue } from '@/components/CopyableValue';
+import { CONTACT_EMAIL } from '@/lib/contact';
 import { plausibleClass } from '@/lib/plausible';
 
 export function AboutPage() {
@@ -109,6 +111,27 @@ export function AboutPage() {
               </NextMuiLink>
               .
             </Typography>
+            <Typography
+              id="contact"
+              variant="h5"
+              component="h2"
+              sx={{ fontWeight: 700, pt: 3, pb: 1 }}
+            >
+              Contact us
+            </Typography>
+            <Typography variant="body1" component="p">
+              One mailbox for everything: questions, problem reports, and
+              requests to remove a node from the
+              {' '}
+              <NextMuiLink href="/nodes">addnodes list</NextMuiLink>
+              .
+            </Typography>
+            <CopyableValue
+              value={CONTACT_EMAIL}
+              copyLabel="Copy our contact address"
+              trackingClass={plausibleClass('Contact Copy', { from: 'about' })}
+            />
+
             <Typography variant="h5" component="h2" sx={{ fontWeight: 700, pt: 3, pb: 1 }}>
               Support our work
             </Typography>

@@ -3,7 +3,12 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/router';
 import { ModeToggle } from './Mode';
-import { menuItems, isMenuGroup, MenuEntry } from './constants';
+import {
+  menuItems,
+  isMenuGroup,
+  isCurrentSection,
+  MenuEntry,
+} from './constants';
 import { NextMuiLink } from '../NextMuiLink';
 import { plausibleClass } from '@/lib/plausible';
 
@@ -105,7 +110,7 @@ export function NavMenuDesktop() {
             // Hub menu has no groups today, but the structure is preserved
             // for parity with sibling sites that do.
             if (isMenuGroup(entry)) return null;
-            const isActive = router.pathname === entry.href;
+            const isActive = isCurrentSection(router.pathname, entry.href);
             return (
               <NavItem
                 key={key}

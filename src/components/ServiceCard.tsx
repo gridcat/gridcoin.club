@@ -4,9 +4,10 @@ import {
 } from '@mui/material';
 import { ServiceEntity } from '@/entities/ServiceEntity';
 import type { LiveStats } from '@/lib/sources';
-import { linkRel } from '@/lib/externalRel';
+import { isExternal, linkRel } from '@/lib/externalRel';
 import { plausibleClass } from '@/lib/plausible';
 import { LiveStat } from './LiveStat';
+import { NextMuiLink } from './NextMuiLink';
 
 interface ServiceCardProps {
   service: ServiceEntity;
@@ -53,12 +54,32 @@ function renderLiveStat(service: ServiceEntity, stats: LiveStats): React.ReactNo
         />
       );
     }
+    case 'addnodes': {
+      const s = stats.addnodes;
+      if (!s || s.total == null) return <LiveStat label="addnodes" value="" unavailable />;
+      return (
+        <LiveStat
+          label="nodes tracked"
+          value={formatNumber(s.total)}
+          relativeTime={s.lastSuccessAt}
+        />
+      );
+    }
     default:
       return null;
   }
 }
 
 export function ServiceCard({ service, liveStats }: ServiceCardProps) {
+  // Most services live on their own subdomain and open in a new tab. Some
+  // are pages on this site, and those should route in place: a new tab for
+  // a same-host link costs a full page load and strands the reader with a
+  // back button that goes nowhere.
+  const external = isExternal(service.url);
+  const linkProps = external
+    ? { component: 'a' as const, target: '_blank', rel: linkRel(service.url, '_blank') }
+    : { component: NextMuiLink };
+
   return (
     <Card
       variant="outlined"
@@ -85,17 +106,15 @@ export function ServiceCard({ service, liveStats }: ServiceCardProps) {
         </Box>
         <Box sx={{ mt: 'auto' }}>
           <Button
-            component="a"
+            {...linkProps}
             href={service.url}
-            target="_blank"
-            rel={linkRel(service.url, '_blank')}
             variant="text"
             color="primary"
             sx={{ pl: 0, fontWeight: 600 }}
-            className={plausibleClass('Outbound Service', {
-              service: service.slug,
-              from: 'home-card',
-            })}
+            className={plausibleClass(
+              external ? 'Outbound Service' : 'Internal Service',
+              { service: service.slug, from: 'home-card' },
+            )}
           >
             Open
             {' '}

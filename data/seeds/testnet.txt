@@ -1,0 +1,6 @@
+# Bootstrap seed list, testnet. See mainnet.txt for the rationale.
+#
+# From grc-wallet/.GridcoinResearch/testnet/gridcoinresearch.conf, which is a
+# frozen copy of the community testnet list.
+
+

@@ -10,6 +10,10 @@ interface Entry {
 const ENTRIES: Entry[] = [
   { path: '/', changefreq: 'daily', priority: '1.0' },
   { path: '/tools', changefreq: 'weekly', priority: '0.8' },
+  { path: '/nodes', changefreq: 'daily', priority: '0.8' },
+  // The full inventory is indexable; the per-node pages are not — see the
+  // noindex in routes/nodes/detail.tsx.
+  { path: '/nodes/all', changefreq: 'daily', priority: '0.6' },
   { path: '/projects', changefreq: 'weekly', priority: '0.8' },
   { path: '/about', changefreq: 'monthly', priority: '0.5' },
 ];

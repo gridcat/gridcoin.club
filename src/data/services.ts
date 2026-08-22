@@ -19,6 +19,17 @@ export const services: ServiceEntity[] = [
     liveSource: 'stamp',
   },
   {
+    slug: 'addnodes',
+    name: 'Addnodes',
+    // Links to the hub page rather than a subdomain site, because
+    // addnodes.gridcoin.club serves plain text to wallets.
+    liveSource: 'addnodes',
+    tagline: 'A continuously checked list of reachable Gridcoin peers, in addnode= format.',
+    url: '/nodes',
+    color: '#283593',
+    status: 'live',
+  },
+  {
     slug: 'grcpay',
     name: 'GRCpay',
     tagline: 'Self-hosted payment facilitator. One-shot wallets, automatic forwarding.',

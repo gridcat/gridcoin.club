@@ -142,3 +142,65 @@ export function itemListLd(name: string, items: ItemListEntry[]) {
     })),
   };
 }
+
+interface BreadcrumbEntry {
+  name: string;
+  /** Absolute or site-relative; the last crumb may omit it. */
+  path?: string;
+}
+
+export function breadcrumbLd(items: BreadcrumbEntry[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: item.name,
+      ...(item.path ? { item: `${SITE_URL}${item.path}` } : {}),
+    })),
+  };
+}
+
+interface Distribution {
+  name: string;
+  url: string;
+  encodingFormat: string;
+}
+
+/**
+ * The peer lists really are a dataset: a public, periodically regenerated
+ * collection with downloadable distributions. Describing them as one is both
+ * honest and the shape search engines and assistants actually look for.
+ */
+export function datasetLd(options: {
+  name: string;
+  description: string;
+  path: string;
+  /** ISO timestamp of the last successful generation, when known. */
+  modified?: string | null;
+  distributions: Distribution[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    '@id': `${SITE_URL}${options.path}#dataset`,
+    name: options.name,
+    description: options.description,
+    url: `${SITE_URL}${options.path}`,
+    // No `license` claimed: asserting one in machine-readable metadata is a
+    // real, hard-to-walk-back commitment about how others may reuse the data.
+    // Add it here once that call has actually been made.
+    isAccessibleForFree: true,
+    creator: { '@id': `${SITE_URL}/#org` },
+    publisher: { '@id': `${SITE_URL}/#org` },
+    // Every 15 minutes, in ISO 8601 duration form.
+    ...(options.modified ? { dateModified: options.modified } : {}),
+    distribution: options.distributions.map((d) => ({
+      '@type': 'DataDownload',
+      name: d.name,
+      contentUrl: d.url,
+      encodingFormat: d.encodingFormat,
+    })),
+  };
+}

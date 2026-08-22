@@ -19,7 +19,10 @@
     "@mui/icons-material": "^9.0.0",
     "@mui/material": "^9.0.0",
     "cookie": "^1.1.1",
+    "kysely": "^0.28.17",
+    "mysql2": "^3.23.4",
     "next": "16.3.1",
+    "prism-react-renderer": "^2.4.1",
     "react": "19.2.5",
     "react-dom": "19.2.5",
     "sharp": "0.35.3"
@@ -86,12 +89,17 @@
   },
   "scripts": {
     "build": "next build",
+    "build:jobs": "tsc -p tsconfig.jobs.json",
     "commit": "cz",
     "dev": "next dev -p 3003",
+    "geo:fetch": "sh scripts/fetch-geo.sh",
+    "job:addnodes": "node dist/jobs/addnodes.js",
     "semantic-release": "semantic-release",
+    "serve:out": "node scripts/serve-out.mjs",
     "start": "next start",
     "test:lint": "eslint .",
     "test:unit": "vitest run",
-    "typecheck": "tsc --project ./tsconfig.json --noEmit --pretty false"
+    "typecheck": "tsc --project ./tsconfig.json --noEmit --pretty false",
+    "typecheck:jobs": "tsc --project ./tsconfig.jobs.json --noEmit --pretty false"
   }
 }

@@ -26,7 +26,7 @@ function isDofollowGithubPath(host: string, pathname: string): boolean {
   return segments.length > 0 && GITHUB_ORG_ALLOWLIST.has(segments[0].toLowerCase());
 }
 
-function isExternal(href: string): boolean {
+export function isExternal(href: string): boolean {
   return /^https?:\/\//i.test(href);
 }
 

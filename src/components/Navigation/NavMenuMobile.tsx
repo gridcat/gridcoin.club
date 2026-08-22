@@ -18,7 +18,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
 import { useRouteNavigating } from '@/hooks';
-import { menuItems, isMenuGroup, MenuLeaf } from './constants';
+import {
+  menuItems,
+  isMenuGroup,
+  isCurrentSection,
+  MenuLeaf,
+} from './constants';
 import { ModeToggle } from './Mode';
 import { plausibleClass } from '@/lib/plausible';
 
@@ -46,7 +51,7 @@ interface LeafLinkProps {
 }
 
 function LeafLink({ leaf, currentPath }: LeafLinkProps) {
-  const isCurrent = currentPath === leaf.href;
+  const isCurrent = isCurrentSection(currentPath, leaf.href);
   return (
     <Link href={leaf.href} passHref>
       <MenuButton

@@ -34,9 +34,19 @@ jobs:
       - run:
           name: Typecheck
           command: npm run typecheck
-      # - run:
-      #     name: Unit tests
-      #     command: npm run test:unit
+      - run:
+          # The job runner builds against its own tsconfig (CommonJS, Node
+          # target), so the Next typecheck alone would not catch a break in it.
+          name: Typecheck the job runner
+          command: npm run typecheck:jobs
+      - run:
+          name: Unit tests
+          command: npm run test:unit
+      - run:
+          # The scheduled job ships inside this image, so a build failure here
+          # is a broken deploy even though the site itself would still render.
+          name: Build the job runner
+          command: npm run build:jobs
 
   release:
     <<: *defaults

@@ -3,6 +3,14 @@ import { services } from '@/data/services';
 import { projects } from '@/data/projects';
 import { tools } from '@/data/tools';
 import { CATEGORY_LABELS, CATEGORY_ORDER } from '@/entities/ProjectEntity';
+import { SITE_URL } from '@/components/Seo';
+
+// Services that are pages on this site carry a relative url. llms.txt is read
+// out of context, with no base to resolve against, so every link has to be
+// absolute.
+function absolute(url: string): string {
+  return url.startsWith('/') ? `${SITE_URL}${url}` : url;
+}
 
 // /llms.txt is a curated, plain-text summary of the site for LLMs / AEO.
 // Generated from the same data files that power the home and projects
@@ -30,10 +38,10 @@ function buildContent(): string {
   lines.push('## Services we run');
   lines.push('');
   for (const s of liveServices) {
-    lines.push(`- [${s.name}](${s.url}): ${s.tagline}`);
+    lines.push(`- [${s.name}](${absolute(s.url)}): ${s.tagline}`);
   }
   for (const s of soonServices) {
-    lines.push(`- [${s.name}](${s.url}): ${s.tagline} (coming soon)`);
+    lines.push(`- [${s.name}](${absolute(s.url)}): ${s.tagline} (coming soon)`);
   }
   lines.push('');
 

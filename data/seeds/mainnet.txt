@@ -1,0 +1,10 @@
+# Bootstrap seed list, mainnet.
+#
+# Same conf syntax we publish, so a snapshot of any existing addnodes list
+# can be dropped in here verbatim. These entries came from the long-standing
+# community list that grc-wallet has been baking into images for years
+# (grc-wallet/.GridcoinResearch/gridcoinresearch.conf).
+#
+# A seed is a candidate, not a promise: it still has to answer a probe before
+# it appears in the published list.
+

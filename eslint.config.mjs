@@ -8,6 +8,10 @@ const config = [
       'node_modules/**',
       'out/**',
       'build/**',
+      // Compiled job output (npm run build:jobs) and the geo range tables
+      // fetched at image build time; neither is source.
+      'dist/**',
+      'data/geo/**',
       'next-env.d.ts',
       'coverage/**',
     ],
