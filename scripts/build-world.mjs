@@ -1,4 +1,4 @@
-// Regenerates src/data/world.ts from Natural Earth 110m admin-0 countries.
+// Regenerates src/data/world.ts from Natural Earth 50m admin-0 countries.
 //
 // Run by hand, not by the build: national borders change on a timescale of
 // years, the output is small enough to commit, and a build that reaches the
@@ -13,18 +13,26 @@
 
 import { writeFileSync } from 'node:fs';
 
-const SRC = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson';
+const SRC = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson';
 const OUT = new URL('../src/data/world.ts', import.meta.url);
 
-// Douglas-Peucker tolerance in degrees. 0.4 is about 45 km at the equator —
-// invisible on a map a thousand units wide, and it takes the payload from
-// ~800 KB to ~40.
-const TOLERANCE = 0.4;
+// Douglas-Peucker tolerance in degrees. This is set by the map's maximum
+// zoom, not by taste: at 12x on a 1000-unit-wide map one CSS pixel is about
+// 3.3 km, so 0.06 degrees (~6.7 km) lands inside roughly two pixels of error
+// at the closest the reader can get. Coarser than that and the coastlines
+// visibly facet when zoomed in.
+//
+// The source matters as much as the tolerance. Natural Earth 110m saturates
+// around 122 KB however little you simplify it, because the dataset itself
+// has no more detail to give; 50m keeps improving. 50m at 0.06 costs 267 KB
+// raw, 99 KB gzipped, which is the price of a map that survives zooming.
+const TOLERANCE = 0.06;
 // Rings smaller than this (rough deg², latitude-corrected) are dropped. Small
-// islands cost more bytes than they contribute pixels.
-const MIN_AREA = 1.2;
-// One decimal is ~11 km. Nothing on this map resolves finer.
-const PRECISION = 1;
+// islands cost more bytes than they contribute pixels. Lower than the 110m
+// era, because at this zoom range small islands are actually visible.
+const MIN_AREA = 0.15;
+// Two decimals is ~1.1 km, comfortably sub-pixel even at maximum zoom.
+const PRECISION = 2;
 
 function perpDistance([x, y], [x1, y1], [x2, y2]) {
   const dx = x2 - x1;
@@ -83,18 +91,15 @@ function centroid(ring) {
 
 const round = (n) => Number(n.toFixed(PRECISION));
 
-// Places Natural Earth 110m has no feature for at all — every one of them is
-// below the dataset's resolution, and between them they host a lot of VPS
-// capacity. Coordinates are the obvious point on each; they only ever have to
-// be right to the nearest degree at this scale. Gap-fill only: anything Natural
-// Earth does supply wins.
+// Gap-fill for places Natural Earth has no feature for at all. At 50m that is
+// only Gibraltar; at 110m it was two dozen, including Singapore and Hong Kong,
+// which between them host a lot of VPS capacity. The mechanism stays because
+// the dataset's coverage of micro-territories is not a guarantee, and a node
+// in a country with no centroid silently vanishes from the map.
+//
+// Anything Natural Earth does supply wins over this.
 const EXTRA_CENTROIDS = {
-  SG: [103.8, 1.4],   HK: [114.2, 22.3],  MO: [113.5, 22.2],  MT: [14.4, 35.9],
-  BH: [50.6, 26.1],   LI: [9.5, 47.2],    MC: [7.4, 43.7],    SM: [12.5, 43.9],
-  AD: [1.5, 42.5],    GI: [-5.4, 36.1],   JE: [-2.1, 49.2],   GG: [-2.6, 49.5],
-  IM: [-4.5, 54.2],   MV: [73.5, 4.2],    SC: [55.5, -4.7],   MU: [57.6, -20.3],
-  BM: [-64.8, 32.3],  KY: [-81.3, 19.3],  VG: [-64.6, 18.4],  CW: [-69.0, 12.2],
-  AW: [-70.0, 12.5],  BB: [-59.6, 13.2],  AG: [-61.8, 17.1],  LC: [-61.0, 13.9],
+  GI: [-5.35, 36.14],
 };
 
 const geo = await (await fetch(SRC)).json();
@@ -118,16 +123,18 @@ for (const feature of geo.features) {
   for (const polygon of polygons) {
     // Outer ring only. Holes (Lesotho inside South Africa) are not worth the
     // bytes or the even-odd fill rule at this size.
-    const ring = simplify(polygon[0].map(([x, y]) => [x, y]), TOLERANCE);
-    const ringArea = area(ring);
+    const full = polygon[0].map(([x, y]) => [x, y]);
 
-    // The centroid is taken BEFORE the size filter. Singapore, Hong Kong,
-    // Luxembourg and Malta are all too small to draw at this scale and all
-    // full of hosting — dropping their outline is fine, dropping their
-    // marker would silently strand every node in them.
-    if (ringArea > biggestArea) { biggestArea = ringArea; biggest = ring; }
+    // The centroid comes off the FULL ring, before simplification and before
+    // the size filter. Both would lose it: a territory narrower than the
+    // tolerance collapses to two points, whose area is zero, and it would end
+    // up with no marker at all. Macao and Gibraltar are exactly that case,
+    // and a country with no centroid silently drops every node in it.
+    const fullArea = area(full);
+    if (fullArea > biggestArea) { biggestArea = fullArea; biggest = full; }
 
-    if (ring.length < 4 || ringArea < MIN_AREA) continue;
+    const ring = simplify(full, TOLERANCE);
+    if (ring.length < 4 || area(ring) < MIN_AREA) continue;
     land.push(ring.flatMap(([x, y]) => [round(x), round(y)]));
   }
 
@@ -146,8 +153,8 @@ for (const [cc, point] of Object.entries(EXTRA_CENTROIDS)) {
 
 const body = `// GENERATED by scripts/build-world.mjs — do not edit by hand.
 //
-// Natural Earth 110m admin-0 countries, simplified to ${TOLERANCE}° and rounded
-// to ${PRECISION} decimal. Public domain; no attribution required.
+// Natural Earth 50m admin-0 countries, simplified to ${TOLERANCE}° and rounded
+// to ${PRECISION} decimals. Public domain; no attribution required.
 //
 // LAND is one flat [lon, lat, lon, lat, ...] array per landmass outline.
 // Flat numbers rather than [lon, lat] pairs because this ships in the client

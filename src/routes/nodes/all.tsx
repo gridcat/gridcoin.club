@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Alert, Box, Chip, Container, MenuItem, Paper, Stack, Table, TableBody, TableCell,
   TableHead, TablePagination, TableRow, TableSortLabel, TextField, ToggleButton,
@@ -13,6 +13,7 @@ import {
 import { PageWrapper } from '@/components/PageWrapper';
 import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
 import { NextMuiLink } from '@/components/NextMuiLink';
+import { plausibleClass, trackEvent } from '@/lib/plausible';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { NodeStatusChip } from '@/components/NodeStatusChip';
 import { UptimeBar } from '@/components/UptimeBar';
@@ -138,7 +139,29 @@ export function AllNodesPage(props: AllNodesPageProps) {
   const visible = sorted.slice(page * perPage, page * perPage + perPage);
   const mapNodes = useMemo(() => filtered.map(toMapNode), [filtered]);
 
+  // One event when typing stops, not one per keystroke. The term itself is
+  // deliberately not sent: this is a page about other people's machines and
+  // the search box is how you look one up, so the query is somebody's address
+  // more often than not. `matched` is the useful half anyway, because it says
+  // whether the search worked.
+  const query_ = query.trim();
+  useEffect(() => {
+    if (!query_) return undefined;
+    const timer = setTimeout(() => {
+      trackEvent('Nodes Search', { matched: filtered.length > 0 ? 'yes' : 'no' });
+    }, 1200);
+    return () => clearTimeout(timer);
+    // filtered is intentionally excluded: it changes as results narrow and
+    // would restart the timer on every keystroke's result set.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query_]);
+
   const toggleSort = (key: SortKey) => {
+    // Mirrors the branches below rather than guessing: clicking the active
+    // column flips it, while a new column takes that column's own default,
+    // which is descending for the two numeric ones.
+    const nextAsc = key === sortKey ? !asc : (key !== 'uptime' && key !== 'lastOnline');
+    trackEvent('Nodes Sort', { column: key, direction: nextAsc ? 'asc' : 'desc' });
     if (key === sortKey) setAsc((v) => !v);
     else {
       setSortKey(key);
@@ -207,7 +230,12 @@ export function AllNodesPage(props: AllNodesPageProps) {
               size="small"
               exclusive
               value={network}
-              onChange={(_e, v) => { if (v) { setNetwork(v); setPage(0); } }}
+              onChange={(_e, v) => {
+                if (!v) return;
+                trackEvent('Nodes Filter', { control: 'network', value: v });
+                setNetwork(v);
+                setPage(0);
+              }}
             >
               <ToggleButton value="all">All</ToggleButton>
               <ToggleButton value="main">Mainnet</ToggleButton>
@@ -219,7 +247,11 @@ export function AllNodesPage(props: AllNodesPageProps) {
               size="small"
               label="Status"
               value={statusFilter}
-              onChange={(e) => { setStatusFilter(e.target.value as never); setPage(0); }}
+              onChange={(e) => {
+                trackEvent('Nodes Filter', { control: 'status', value: e.target.value });
+                setStatusFilter(e.target.value as never);
+                setPage(0);
+              }}
               sx={{ minWidth: 160 }}
             >
               <MenuItem value="all">Any</MenuItem>
@@ -305,7 +337,12 @@ export function AllNodesPage(props: AllNodesPageProps) {
                           textOverflow: 'ellipsis',
                         }}
                       >
-                        <NextMuiLink href={`/nodes/${n.id}`}>{n.addnode}</NextMuiLink>
+                        <NextMuiLink
+                          href={`/nodes/${n.id}`}
+                          className={plausibleClass('Node Detail', { from: 'all' })}
+                        >
+                          {n.addnode}
+                        </NextMuiLink>
                       </TableCell>
                       <TableCell>
                         <Chip
@@ -360,9 +397,16 @@ export function AllNodesPage(props: AllNodesPageProps) {
               component="div"
               count={filtered.length}
               page={page}
-              onPageChange={(_e, p) => setPage(p)}
+              onPageChange={(_e, p) => {
+                trackEvent('Nodes Page', { direction: p > page ? 'next' : 'previous' });
+                setPage(p);
+              }}
               rowsPerPage={perPage}
-              onRowsPerPageChange={(e) => { setPerPage(Number(e.target.value)); setPage(0); }}
+              onRowsPerPageChange={(e) => {
+                trackEvent('Nodes Page', { control: 'rows', value: e.target.value });
+                setPerPage(Number(e.target.value));
+                setPage(0);
+              }}
               rowsPerPageOptions={[25, 50, 100]}
             />
           </Paper>

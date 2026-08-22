@@ -14,6 +14,7 @@ import {
   ASPECT, clampViewport, graticule, layout, MAX_SCALE, MIN_SCALE, ringPath,
   viewBoxOf, zoomAbout, type MapNode, type View, type Viewport,
 } from '@/lib/worldMap';
+import { trackEvent } from '@/lib/plausible';
 
 interface Props {
   /** Already filtered by the caller — the map shows exactly what the table
@@ -72,6 +73,8 @@ export function NodeMap({ nodes }: Props) {
     };
   }, [viewport]);
 
+  // Wheel and drag are not tracked. They fire continuously, and a hundred
+  // events for one gesture tells you nothing the button counts do not.
   const onWheel = useCallback((e: React.WheelEvent<SVGSVGElement>) => {
     const at = toUser(e.clientX, e.clientY);
     if (!at) return;
@@ -106,7 +109,13 @@ export function NodeMap({ nodes }: Props) {
   const endDrag = useCallback(() => { drag.current = null; }, []);
 
   const step = useCallback((factor: number) => {
+    trackEvent('Map Zoom', { control: factor > 1 ? 'in' : 'out' });
     setViewport((v) => zoomAbout(v, factor, v.cx, v.cy, VIEW));
+  }, []);
+
+  const reset = useCallback(() => {
+    trackEvent('Map Zoom', { control: 'reset' });
+    setViewport(HOME);
   }, []);
 
   const water = alpha(theme.palette.primary.main, theme.palette.mode === 'dark' ? 0.07 : 0.05);
@@ -209,7 +218,7 @@ export function NodeMap({ nodes }: Props) {
             <span>
               <IconButton
                 size="small"
-                onClick={() => setViewport(HOME)}
+                onClick={reset}
                 disabled={viewport.scale <= MIN_SCALE}
                 sx={{ bgcolor: 'background.paper', '&:hover': { bgcolor: 'background.paper' } }}
               >

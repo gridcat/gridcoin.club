@@ -20,6 +20,8 @@
 //     buttons that route to other hub pages.
 //   - 'Tag Toggle' (tag, state) for the /projects filter chips.
 //   - 'Mode Toggle' (mode) for light/dark switch.
+//   - 'Nodes Sort' / 'Nodes Filter' / 'Nodes Search' / 'Nodes Page' /
+//     'Map Zoom' for the controls on /nodes/all.
 export function plausibleClass(
   eventName: string,
   props: Record<string, string | number | boolean | null | undefined> = {},
@@ -31,4 +33,34 @@ export function plausibleClass(
     out.push(`plausible-event-${key}=${enc(String(raw))}`);
   }
   return out.join(' ');
+}
+
+declare global {
+  interface Window {
+    plausible?: (event: string, options?: { props?: Record<string, string> }) => void;
+  }
+}
+
+/**
+ * Fire an event that is not a click on an element.
+ *
+ * The class-based form above only works for things the reader clicks, which
+ * covers links and buttons and nothing else. Sorting a column, changing a
+ * filter or zooming a map are state changes, so they need the call.
+ *
+ * Silently does nothing when the script has not loaded: an ad blocker, a
+ * local dev run, or the testnet build, none of which should throw.
+ */
+export function trackEvent(
+  eventName: string,
+  props: Record<string, string | number | boolean | null | undefined> = {},
+): void {
+  if (typeof window === 'undefined' || typeof window.plausible !== 'function') return;
+
+  const clean: Record<string, string> = {};
+  for (const [key, raw] of Object.entries(props)) {
+    if (raw === null || raw === undefined || raw === '') continue;
+    clean[key] = String(raw);
+  }
+  window.plausible(eventName, Object.keys(clean).length ? { props: clean } : undefined);
 }
