@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.6.1...grc-hub-frontend-v1.7.0) (2026-08-22)
+
+
+### Features
+
+* public nodes list ([0b885e4](https://github.com/gridcat/gridcoin.club/commit/0b885e4ec8484e46ae29468cc128e73bbb616339))
+
 ## [1.6.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.6.0...grc-hub-frontend-v1.6.1) (2026-08-19)
 
 
