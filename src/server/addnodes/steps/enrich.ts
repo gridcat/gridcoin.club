@@ -9,6 +9,11 @@
 //
 //   cc / asn  from the CSVs baked into the image. Purely a comment on a line.
 //
+//   city / lat / lon  from the dbip-city tables, for the map. Resolved in ONE
+//        streamed pass at the end rather than per node, because those tables
+//        are millions of rows and are read off disk rather than held in
+//        memory — see city.ts.
+//
 // Both are re-checked every 30 days rather than once: hosting moves, and a
 // stale country note is a small lie that compounds.
 
@@ -16,6 +21,7 @@ import { promises as dns } from 'node:dns';
 import type { NodeRow } from '../../db/database';
 import { classifyHost } from '../addr';
 import type { GeoLookup } from '../geo';
+import { resolveCities } from '../city';
 import type { NodeStateUpdate } from '../repository';
 import { log } from '../../log';
 
@@ -106,6 +112,9 @@ export async function runEnrich(
   if (!queue.length) return [];
 
   const updates: NodeStateUpdate[] = [];
+  // node id -> the literal address its geo was resolved against, so the city
+  // pass can be done in one sweep once every worker has finished.
+  const geoTargets = new Map<number, string>();
   let cursor = 0;
 
   async function worker(): Promise<void> {
@@ -130,6 +139,13 @@ export async function runEnrich(
         update.asn = info.asn;
         update.asnOrg = info.asnOrg;
         update.geoCheckedAt = now;
+        // Cleared unless the city pass below finds something, so a node that
+        // moves out of the database's coverage loses its old pin rather than
+        // keeping it forever.
+        update.city = null;
+        update.lat = null;
+        update.lon = null;
+        if (target) geoTargets.set(Number(node.id), target);
       }
 
       if (Object.keys(update).length > 1) updates.push(update);
@@ -139,6 +155,18 @@ export async function runEnrich(
   await Promise.all(
     Array.from({ length: Math.min(ENRICH_CONCURRENCY, queue.length) }, () => worker()),
   );
+
+  if (geoTargets.size) {
+    const cities = await resolveCities(Array.from(geoTargets.values()));
+    for (const update of updates) {
+      const target = geoTargets.get(update.id);
+      const city = target ? cities.get(target) : undefined;
+      if (!city) continue;
+      update.city = city.city;
+      update.lat = city.lat;
+      update.lon = city.lon;
+    }
+  }
 
   log.info('enrichment complete', { queued: queue.length, updated: updates.length });
   return updates;

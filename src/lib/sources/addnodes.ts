@@ -18,6 +18,9 @@ export interface PublishedNode {
   ptr: string | null;
   label: string | null;
   cc: string | null;
+  city: string | null;
+  lat: number | null;
+  lon: number | null;
   asn: number | null;
   asnOrg: string | null;
   status: NodeStatus;

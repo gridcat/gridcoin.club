@@ -425,6 +425,9 @@ export interface NodeStateUpdate {
   cc?: string | null;
   asn?: number | null;
   asnOrg?: string | null;
+  city?: string | null;
+  lat?: number | null;
+  lon?: number | null;
   geoCheckedAt?: Date;
 }
 
@@ -445,6 +448,9 @@ export async function updateNodes(updates: NodeStateUpdate[], db = getDb()): Pro
     if (u.cc !== undefined) set.cc = u.cc;
     if (u.asn !== undefined) set.asn = u.asn;
     if (u.asnOrg !== undefined) set.asn_org = u.asnOrg;
+    if (u.city !== undefined) set.city = u.city;
+    if (u.lat !== undefined) set.lat = u.lat;
+    if (u.lon !== undefined) set.lon = u.lon;
     if (u.geoCheckedAt !== undefined) set.geo_checked_at = u.geoCheckedAt;
     if (!Object.keys(set).length) continue;
     await db.updateTable('nodes').set(set as never).where('id', '=', u.id).execute();

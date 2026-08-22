@@ -89,86 +89,107 @@ export function graticule(view: View, stepDeg = 30): string[] {
 }
 
 export interface MapNode {
-  /** Stable identity, only used to order a country's dots deterministically. */
+  /** Stable identity, only used to order co-located dots deterministically. */
   key: string;
   cc: string | null;
   status: string;
   network: 'main' | 'test';
+  /** City-level coordinates when we have them; null falls back to the
+   *  country centroid. */
+  lat?: number | null;
+  lon?: number | null;
 }
 
 export interface PlacedNode extends MapNode {
-  cc: string;
   x: number;
   y: number;
-  /** Dot radius, shrinking as a country's cluster gets crowded. */
+  /** Dot radius in user units, shrinking as a spot gets crowded. */
   r: number;
+  /** True when this came from a city lookup rather than a country centroid.
+   *  The caption distinguishes the two, because they are not the same claim. */
+  precise: boolean;
 }
 
-// How far a country's cluster may spread from its centroid, in user units.
-// Europe is the constraint: much wider and Germany's cluster reaches into
-// Poland's, which would read as nodes that are not there.
-const CLUSTER_RADIUS = 18;
+// How far co-located nodes may spread from their shared point, in user units.
+// A city pin only has to separate machines in one datacentre; a country
+// centroid is standing in for a whole country and Europe is the constraint —
+// much wider and Germany's cluster reaches into Poland's.
+const CITY_SPREAD = 5;
+const COUNTRY_SPREAD = 18;
 const MAX_DOT = 3.4;
 const MIN_DOT = 1.1;
 
 // Golden angle. Successive dots land in the gaps left by the previous ones,
 // which is why sunflower seeds pack the way they do and why this beats random
-// jitter: it is even at every count, and it is obviously a arrangement rather
-// than a claim about where anything is.
+// jitter: it is even at every count, and it is obviously an arrangement
+// rather than a claim about where anything is.
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 
 /**
  * Place every node on the map.
  *
- * We geolocate to the country and no finer, so a country's nodes all share
- * one coordinate. Drawing them there would stack forty discs into one, so
- * each country's nodes are spread over a small phyllotactic disc around its
- * centroid. The spread carries no information — it is legibility, not
- * position, and the caption under the map says so.
+ * Nodes that resolved to a city sit on their own coordinates. Nodes that did
+ * not fall back to the centroid of their country. Either way anything sharing
+ * a point — a whole country's worth, or one rack's worth — is spread over a
+ * small phyllotactic disc so the dots do not stack into one.
  *
- * `unplaced` counts nodes whose address has no country yet: never enriched,
- * or an ASN table miss. They genuinely cannot go on the map.
+ * `unplaced` counts nodes with neither: no coordinates and no country.
  */
 export function layout(
   nodes: MapNode[],
   centroids: Record<string, [number, number]>,
   view: View,
 ): { placed: PlacedNode[]; unplaced: number } {
-  const byCc = new Map<string, MapNode[]>();
+  interface Spot { lon: number; lat: number; precise: boolean; members: MapNode[] }
+  const spots = new Map<string, Spot>();
   let unplaced = 0;
 
   for (const node of nodes) {
-    if (!node.cc || !centroids[node.cc]) {
+    const precise = typeof node.lat === 'number' && typeof node.lon === 'number';
+    const centroid = node.cc ? centroids[node.cc] : undefined;
+
+    let lon: number;
+    let lat: number;
+    if (precise) {
+      lon = node.lon as number;
+      lat = node.lat as number;
+    } else if (centroid) {
+      [lon, lat] = centroid;
+    } else {
       unplaced += 1;
       continue;
     }
-    const group = byCc.get(node.cc) ?? [];
-    group.push(node);
-    byCc.set(node.cc, group);
+
+    // Three decimals is ~100 m: anything closer than that is the same pin as
+    // far as this map is concerned.
+    const key = `${lon.toFixed(3)}:${lat.toFixed(3)}`;
+    const spot = spots.get(key) ?? { lon, lat, precise, members: [] };
+    spot.members.push(node);
+    spots.set(key, spot);
   }
 
   const placed: PlacedNode[] = [];
 
-  for (const [cc, group] of Array.from(byCc.entries())) {
-    const [lon, lat] = centroids[cc];
-    const centre = project(lon, lat, view);
+  for (const spot of Array.from(spots.values())) {
+    const centre = project(spot.lon, spot.lat, view);
+    const spread = spot.precise ? CITY_SPREAD : COUNTRY_SPREAD;
     // Sorted so the arrangement is stable: the same node keeps the same seat
     // whenever the same set is drawn.
-    const ordered = group.slice().sort((a, b) => a.key.localeCompare(b.key));
+    const ordered = spot.members.slice().sort((a, b) => a.key.localeCompare(b.key));
     const n = ordered.length;
-    const dot = Math.max(MIN_DOT, Math.min(MAX_DOT, CLUSTER_RADIUS / Math.sqrt(n)));
+    const dot = Math.max(MIN_DOT, Math.min(MAX_DOT, spread / Math.sqrt(n)));
 
     ordered.forEach((node, i) => {
-      // Normalised by the count, so a country with eight hundred nodes packs
-      // into the same disc as one with eight rather than swamping a continent.
+      // Normalised by the count, so forty nodes on one pin pack into the same
+      // disc as four rather than swamping the neighbourhood.
       const t = n > 1 ? Math.sqrt(i / (n - 1)) : 0;
       const angle = i * GOLDEN_ANGLE;
       placed.push({
         ...node,
-        cc,
-        x: centre.x + CLUSTER_RADIUS * t * Math.cos(angle),
-        y: centre.y + CLUSTER_RADIUS * t * Math.sin(angle),
+        x: centre.x + spread * t * Math.cos(angle),
+        y: centre.y + spread * t * Math.sin(angle),
         r: dot,
+        precise: spot.precise,
       });
     });
   }
@@ -176,4 +197,54 @@ export function layout(
   // Offline first so the ones that answered paint on top of them.
   placed.sort((a, b) => Number(a.status === 'online') - Number(b.status === 'online'));
   return { placed, unplaced };
+}
+
+export interface Viewport {
+  /** 1 is the whole world; larger zooms in. */
+  scale: number;
+  /** Centre of the view, in user units. */
+  cx: number;
+  cy: number;
+}
+
+export const MIN_SCALE = 1;
+export const MAX_SCALE = 12;
+
+/** Keep the view inside the map: no panning off into blank space, and no
+ *  zooming out past the whole world. */
+export function clampViewport(v: Viewport, view: View): Viewport {
+  const scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, v.scale));
+  const halfW = view.width / (2 * scale);
+  const halfH = view.height / (2 * scale);
+  return {
+    scale,
+    cx: Math.min(view.width - halfW, Math.max(halfW, v.cx)),
+    cy: Math.min(view.height - halfH, Math.max(halfH, v.cy)),
+  };
+}
+
+export function viewBoxOf(v: Viewport, view: View): string {
+  const w = view.width / v.scale;
+  const h = view.height / v.scale;
+  return `${(v.cx - w / 2).toFixed(2)} ${(v.cy - h / 2).toFixed(2)} ${w.toFixed(2)} ${h.toFixed(2)}`;
+}
+
+/**
+ * Zoom about a fixed point, so the spot under the cursor stays under it.
+ * Without this, wheel-zoom drifts and feels broken.
+ */
+export function zoomAbout(
+  v: Viewport,
+  factor: number,
+  anchorX: number,
+  anchorY: number,
+  view: View,
+): Viewport {
+  const scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, v.scale * factor));
+  const ratio = v.scale / scale;
+  return clampViewport({
+    scale,
+    cx: anchorX + (v.cx - anchorX) * ratio,
+    cy: anchorY + (v.cy - anchorY) * ratio,
+  }, view);
 }

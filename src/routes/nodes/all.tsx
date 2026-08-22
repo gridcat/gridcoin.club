@@ -89,7 +89,12 @@ const SPARK_HOURS = 48;
 /** What the map needs off a row. `key` only orders a country's dots. */
 function toMapNode(n: Row): MapNode {
   return {
-    key: n.addnode, cc: n.cc, status: n.status, network: n.network,
+    key: n.addnode,
+    cc: n.cc,
+    status: n.status,
+    network: n.network,
+    lat: n.lat,
+    lon: n.lon,
   };
 }
 
@@ -244,13 +249,18 @@ export function AllNodesPage(props: AllNodesPageProps) {
           <Typography
             variant="body2"
             sx={{
-              color: 'text.secondary', textAlign: 'center', pb: 4, mx: 'auto', maxWidth: 640,
+              color: 'text.secondary', textAlign: 'center', pb: 4, mx: 'auto', maxWidth: 660,
             }}
           >
-            One dot per node. We geolocate to the country and no finer, so each
-            country&rsquo;s nodes are spread over a small disc around it — the
-            spread is there to keep them apart on screen and says nothing about
-            where any of them is.
+            One dot per node, placed by city where the address resolves to one
+            and at the centre of its country where it does not. Machines
+            sharing a location are fanned out around it so they do not stack
+            into a single dot — that fan is spacing, not position. Scroll or
+            use the buttons to zoom, drag to pan. IP geolocation is inexact by
+            nature and none of this is verified against the operator.
+            {' '}
+            <NextMuiLink href="https://db-ip.com">IP Geolocation by DB-IP</NextMuiLink>
+            .
           </Typography>
 
           <Paper variant="outlined">

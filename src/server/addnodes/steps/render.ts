@@ -130,6 +130,11 @@ function publicNode(c: Candidate) {
     ptr: c.node.ptr,
     label: c.node.label,
     cc: c.node.cc,
+    city: c.node.city,
+    // DECIMAL comes back from MariaDB as a string; coerce at the edge so the
+    // published JSON carries numbers, not quoted numbers.
+    lat: c.node.lat === null ? null : Number(c.node.lat),
+    lon: c.node.lon === null ? null : Number(c.node.lon),
     asn: c.node.asn === null ? null : Number(c.node.asn),
     asnOrg: c.node.asn_org,
     status: c.node.status,

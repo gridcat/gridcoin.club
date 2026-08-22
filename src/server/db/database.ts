@@ -37,6 +37,10 @@ export interface NodesTable {
   cc: string | null;
   asn: number | null;
   asn_org: string | null;
+  city: string | null;
+  // MariaDB hands DECIMAL back as a string; coerce with Number() at the edge.
+  lat: string | number | null;
+  lon: string | number | null;
   geo_checked_at: DbDate | null;
   status: Generated<NodeStatus>;
   last_probe_at: DbDate | null;

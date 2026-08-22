@@ -37,4 +37,5 @@ yarn-error.log*
 .vercel
 tsconfig.tsbuildinfo
 data/geo/*.csv
+data/geo/*.csv.gz
 dist/
