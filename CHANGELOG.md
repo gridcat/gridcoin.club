@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.7.1...grc-hub-frontend-v1.8.0) (2026-08-22)
+
+
+### Features
+
+* add nodes map ([d785057](https://github.com/gridcat/gridcoin.club/commit/d785057a6f167c3059cd7201f0be43fa45af080d))
+
 ## [1.7.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.7.0...grc-hub-frontend-v1.7.1) (2026-08-22)
 
 
