@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.9.1...grc-hub-frontend-v1.10.0) (2026-08-22)
+
+
+### Features
+
+* improve map, add plausible events ([c4a3520](https://github.com/gridcat/gridcoin.club/commit/c4a35204af644d4420154426485d8d92bc6ea82e))
+
 ## [1.9.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.9.0...grc-hub-frontend-v1.9.1) (2026-08-22)
 
 
