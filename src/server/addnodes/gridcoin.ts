@@ -66,12 +66,25 @@ async function call<T>(cfg: RpcConfig, method: string, params: unknown[] = []): 
 }
 
 /**
+ * How many addrman entries to ask for. NOT zero: Bitcoin reads 0 as
+ * "everything", but Gridcoin's rpc/net.cpp rejects it —
+ * `if (count <= 0) throw ... "Address count out of range"` — and defaults to
+ * **1** when the argument is omitted. Either way the bulk source silently
+ * yields nothing, which is exactly what happened here.
+ *
+ * There is no upper bound to trip over. The RPC returns
+ * `min(count, vAddr.size())`, and `addrman.GetAddr()` has already applied its
+ * own ADDRMAN_GETADDR_MAX / _MAX_PCT ceilings, so any count at or above that
+ * ceiling means "the whole pool" and asking for more is harmless.
+ */
+const ADDRMAN_ALL = 10000;
+
+/**
  * Dump the daemon's address manager. This is the bulk source: addrman holds
  * thousands of gossiped entries, not just the handful we are connected to.
- * `0` means "everything".
  */
 export function getNodeAddresses(cfg: RpcConfig): Promise<NodeAddress[] | null> {
-  return call<NodeAddress[]>(cfg, 'getnodeaddresses', [0]);
+  return call<NodeAddress[]>(cfg, 'getnodeaddresses', [ADDRMAN_ALL]);
 }
 
 /**
