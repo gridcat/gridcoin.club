@@ -1,3 +1,13 @@
+## [1.6.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.6.0...grc-hub-frontend-v1.6.1) (2026-08-19)
+
+
+### Bug Fixes
+
+* cut the crap ([c8ca174](https://github.com/gridcat/gridcoin.club/commit/c8ca174a82034c3952845ce0a56ec719bc6cadb3))
+* harden dependencies ([d96a8fa](https://github.com/gridcat/gridcoin.club/commit/d96a8fa745198a9347de226aabda08d6f52a9712))
+* regenerate lockfile ([35cf75a](https://github.com/gridcat/gridcoin.club/commit/35cf75abdf8ee9121b3b59a727b465214b57e42a))
+* update lockfile ([e51e993](https://github.com/gridcat/gridcoin.club/commit/e51e993a5fe1d23d3aedda672e937fe6a6e57ad7))
+
 # [1.6.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.5.0...grc-hub-frontend-v1.6.0) (2026-06-28)
 
 
