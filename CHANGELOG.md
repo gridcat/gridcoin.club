@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.9.0...grc-hub-frontend-v1.9.1) (2026-08-22)
+
+
+### Bug Fixes
+
+* remove dead nodes from the list ([2d87b7a](https://github.com/gridcat/gridcoin.club/commit/2d87b7a3a8800408145a1257ecb3ccd3c8bb5a46))
+
 # [1.9.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.8.0...grc-hub-frontend-v1.9.0) (2026-08-22)
 
 
