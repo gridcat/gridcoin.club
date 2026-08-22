@@ -135,6 +135,7 @@ export function NodesPage({
             Gridcoin peers that answered a connection just now, in addnode= format.
           </Typography>
 
+
           {status && !status.ok ? (
             <Alert severity="warning" sx={{ mb: 3 }}>
               The list below is being served from the last good run. Our

@@ -21,6 +21,8 @@ import {
   type BothNetworks, type NodeStatus, type PublishedNode,
 } from '@/lib/sources/addnodes';
 import { percent, timeAgo, utc } from '@/lib/nodeFormat';
+import { NodeMap } from '@/components/NodeMap';
+import type { MapNode } from '@/lib/worldMap';
 
 type Row = PublishedNode & { network: 'main' | 'test' };
 type SortKey = 'address' | 'network' | 'where' | 'status' | 'uptime' | 'lastOnline';
@@ -84,6 +86,13 @@ function hiddenBelow(bp?: 'sm' | 'md' | 'lg') {
 // is on the node's own page, where it has room.
 const SPARK_HOURS = 48;
 
+/** What the map needs off a row. `key` only orders a country's dots. */
+function toMapNode(n: Row): MapNode {
+  return {
+    key: n.addnode, cc: n.cc, status: n.status, network: n.network,
+  };
+}
+
 export function AllNodesPage(props: AllNodesPageProps) {
   const { status, renderedAt } = props;
   const now = new Date(renderedAt);
@@ -122,6 +131,7 @@ export function AllNodesPage(props: AllNodesPageProps) {
   }, [filtered, sortKey, asc]);
 
   const visible = sorted.slice(page * perPage, page * perPage + perPage);
+  const mapNodes = useMemo(() => filtered.map(toMapNode), [filtered]);
 
   const toggleSort = (key: SortKey) => {
     if (key === sortKey) setAsc((v) => !v);
@@ -224,6 +234,24 @@ export function AllNodesPage(props: AllNodesPageProps) {
 
             <Chip label={`${filtered.length} of ${all.length}`} />
           </Stack>
+
+          {/* Fed from `filtered`, not `visible`: the table pages, the map does
+              not. Narrowing the filters narrows both together, but turning to
+              page two should not empty the map. */}
+          <Box sx={{ pb: 1 }}>
+            <NodeMap nodes={mapNodes} />
+          </Box>
+          <Typography
+            variant="body2"
+            sx={{
+              color: 'text.secondary', textAlign: 'center', pb: 4, mx: 'auto', maxWidth: 640,
+            }}
+          >
+            One dot per node. We geolocate to the country and no finer, so each
+            country&rsquo;s nodes are spread over a small disc around it — the
+            spread is there to keep them apart on screen and says nothing about
+            where any of them is.
+          </Typography>
 
           <Paper variant="outlined">
             <Box sx={{ overflowX: 'auto' }}>
