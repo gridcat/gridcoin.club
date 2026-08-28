@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.10.0...grc-hub-frontend-v1.11.0) (2026-08-28)
+
+
+### Features
+
+* logos, cards ([06829a8](https://github.com/gridcat/gridcoin.club/commit/06829a8e332d9bd2c1b1666c71c4f897a0c701e4))
+
 # [1.10.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.9.1...grc-hub-frontend-v1.10.0) (2026-08-22)
 
 
