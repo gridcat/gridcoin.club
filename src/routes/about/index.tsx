@@ -4,7 +4,6 @@ import {
 } from '@mui/material';
 import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
-import { GradientLine } from '@/components/GradientLine';
 import { Seo, SITE_NAME } from '@/components/Seo';
 import { PageWrapper } from '@/components/PageWrapper';
 import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
@@ -25,7 +24,6 @@ export function AboutPage() {
       <PageWrapper>
         <Header />
         <Container maxWidth="md" sx={{ flexGrow: 1, py: { xs: 4, md: 6 } }}>
-          <GradientLine />
           <Typography variant="h3" component="h1" sx={{ fontWeight: 800, pb: 2 }}>
             About
           </Typography>

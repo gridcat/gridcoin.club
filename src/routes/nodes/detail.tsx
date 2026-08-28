@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
-import { GradientLine } from '@/components/GradientLine';
 import { Seo, SITE_NAME } from '@/components/Seo';
 import { PageWrapper } from '@/components/PageWrapper';
 import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
@@ -104,7 +103,6 @@ export function NodeDetailPage({
       <PageWrapper>
         <Header />
         <Container maxWidth="lg" sx={{ flexGrow: 1, py: { xs: 4, md: 6 } }}>
-          <GradientLine />
 
           <Breadcrumbs
             items={[

@@ -5,7 +5,6 @@ import {
 import Link from 'next/link';
 import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
-import { GradientLine } from '@/components/GradientLine';
 import {
   Seo, SITE_NAME, organizationLd, websiteLd,
 } from '@/components/Seo';
@@ -43,7 +42,6 @@ export function HomePage({ liveStats }: HomePageProps) {
       <PageWrapper>
         <Header />
         <Container maxWidth="lg" sx={{ flexGrow: 1, py: { xs: 4, md: 6 } }}>
-          <GradientLine />
           <Box sx={{ textAlign: { xs: 'left', md: 'center' }, py: { xs: 4, md: 6 } }}>
             <Typography component="h1" variant="h3" sx={{ fontWeight: 800, pb: 2 }}>
               Tools for the Gridcoin network.

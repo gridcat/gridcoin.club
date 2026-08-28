@@ -6,7 +6,6 @@ import {
 } from '@mui/material';
 import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
-import { GradientLine } from '@/components/GradientLine';
 import { Seo, SITE_NAME, itemListLd } from '@/components/Seo';
 import { PageWrapper } from '@/components/PageWrapper';
 import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
@@ -84,7 +83,6 @@ export function ProjectsPage() {
       <PageWrapper>
         <Header />
         <Container maxWidth="lg" sx={{ flexGrow: 1, py: { xs: 4, md: 6 } }}>
-          <GradientLine />
           <Typography variant="h3" component="h1" sx={{ fontWeight: 800, pb: 1 }}>
             Curated projects
           </Typography>

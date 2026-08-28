@@ -2,72 +2,35 @@ import React from 'react';
 import {
   Card, CardContent, Typography, Box, Button,
 } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import { ServiceEntity } from '@/entities/ServiceEntity';
 import type { LiveStats } from '@/lib/sources';
 import { isExternal, linkRel } from '@/lib/externalRel';
 import { plausibleClass } from '@/lib/plausible';
-import { LiveStat } from './LiveStat';
+import { ServiceLiveStat } from './LiveStat';
 import { NextMuiLink } from './NextMuiLink';
+import { HexMark } from './HexMark';
+
+// The brand pair from the service's own theme.ts, as a bar across the card.
+export const serviceFill = (service: ServiceEntity): string => (
+  `linear-gradient(90deg, ${service.gradient[0]}, ${service.gradient[1]})`
+);
+
+// A wash of the service's colour pouring in from the top-right, as if the
+// card were lit from that side. The middle stop is what stops it falling off
+// to nothing halfway down — without it the colour reads as a corner smudge
+// rather than something the whole card is sitting in.
+export const serviceWash = (service: ServiceEntity, strength = 0.42): string => (
+  'radial-gradient(125% 105% at 100% 0%, '
+  + `${alpha(service.color, strength)} 0%, `
+  + `${alpha(service.color, strength * 0.42)} 40%, `
+  + `${alpha(service.color, strength * 0.12)} 68%, `
+  + 'transparent 88%)'
+);
 
 interface ServiceCardProps {
   service: ServiceEntity;
   liveStats: LiveStats;
-}
-
-function formatNumber(n: number | null | undefined): string {
-  if (typeof n !== 'number') return '—';
-  return n.toLocaleString('en-US');
-}
-
-function renderLiveStat(service: ServiceEntity, stats: LiveStats): React.ReactNode {
-  if (!service.liveSource) return null;
-  switch (service.liveSource) {
-    case 'stamp': {
-      const s = stats.stamp;
-      if (!s || s.total == null) return <LiveStat label="stamp" value="" unavailable />;
-      return (
-        <LiveStat
-          label="stamps notarized"
-          value={formatNumber(s.total)}
-          relativeTime={s.latestAt}
-        />
-      );
-    }
-    case 'explorer': {
-      const s = stats.explorer;
-      if (!s || s.height == null) return <LiveStat label="explorer" value="" unavailable />;
-      return (
-        <LiveStat
-          label="block height"
-          value={formatNumber(s.height)}
-          relativeTime={s.latestBlockTime}
-        />
-      );
-    }
-    case 'grcpay': {
-      const s = stats.grcpay;
-      if (!s || !s.ok) return <LiveStat label="grcpay" value="" unavailable />;
-      return (
-        <LiveStat
-          label="API"
-          value={s.version ? `up · v${s.version}` : 'up'}
-        />
-      );
-    }
-    case 'addnodes': {
-      const s = stats.addnodes;
-      if (!s || s.total == null) return <LiveStat label="addnodes" value="" unavailable />;
-      return (
-        <LiveStat
-          label="nodes tracked"
-          value={formatNumber(s.total)}
-          relativeTime={s.lastSuccessAt}
-        />
-      );
-    }
-    default:
-      return null;
-  }
 }
 
 export function ServiceCard({ service, liveStats }: ServiceCardProps) {
@@ -91,18 +54,39 @@ export function ServiceCard({ service, liveStats }: ServiceCardProps) {
         overflow: 'hidden',
         transition: '0.2s ease-out',
         ':hover': { boxShadow: 4, transform: 'translateY(-2px)' },
+        ':hover::after': { opacity: 1 },
+        '::after': {
+          content: '""',
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          backgroundImage: serviceWash(service),
+          opacity: 0.88,
+          transition: 'opacity 0.2s ease-out',
+        },
       }}
     >
-      <Box sx={{ height: 4, backgroundColor: service.color }} />
-      <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <Typography variant="h6" component="h2" sx={{ fontWeight: 700 }}>
-          {service.name}
-        </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary', pt: 1, pb: 2 }}>
+      <Box sx={{ height: 6, backgroundImage: serviceFill(service) }} />
+      <CardContent
+        sx={{
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, pb: 1.5 }}>
+          <HexMark mark={service.mark} gradient={service.gradient} size={40} />
+          <Typography variant="h6" component="h2" sx={{ fontWeight: 700 }}>
+            {service.name}
+          </Typography>
+        </Box>
+        <Typography variant="body2" sx={{ color: 'text.secondary', pb: 2 }}>
           {service.tagline}
         </Typography>
         <Box sx={{ pb: 2, minHeight: 40 }}>
-          {renderLiveStat(service, liveStats)}
+          <ServiceLiveStat service={service} stats={liveStats} />
         </Box>
         <Box sx={{ mt: 'auto' }}>
           <Button
