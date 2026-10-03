@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.11.0...grc-hub-frontend-v1.11.1) (2026-10-03)
+
+
+### Bug Fixes
+
+* remove unused testnet var; bump next and sharp ([01e5d64](https://github.com/gridcat/gridcoin.club/commit/01e5d64b87f885bcc95fef3c8514e91014e84db0))
+
 # [1.11.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.10.0...grc-hub-frontend-v1.11.0) (2026-08-28)
 
 
