@@ -1,3 +1,15 @@
+# [1.12.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.11.1...grc-hub-frontend-v1.12.0) (2026-10-10)
+
+
+### Bug Fixes
+
+* dependency upgrade ([43cebac](https://github.com/gridcat/gridcoin.club/commit/43cebac2b06d90b3aa92d4bda6bc849c240816ed))
+
+
+### Features
+
+* add exchangers ([8fe0930](https://github.com/gridcat/gridcoin.club/commit/8fe09308cd4f05b0da52992aace3a1fe89d6517e))
+
 ## [1.11.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.11.0...grc-hub-frontend-v1.11.1) (2026-10-03)
 
 
