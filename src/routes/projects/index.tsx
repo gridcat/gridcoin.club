@@ -170,6 +170,23 @@ export function ProjectsPage() {
               </Typography>
             </Box>
           </Fade>
+
+          <Typography
+            variant="caption"
+            component="p"
+            sx={{
+              color: 'text.secondary',
+              pt: 3,
+              mt: 2,
+              borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+            }}
+          >
+            Everything listed here is run by independent people and teams, not by us.
+            We don&apos;t endorse these projects and can&apos;t vouch for them, so we
+            aren&apos;t responsible for what they do or for any funds you send them.
+            This page is just an overview with links. Look into a project yourself
+            before trusting it with money, and that goes double for exchanges.
+          </Typography>
         </Container>
         <Footer />
       </PageWrapper>

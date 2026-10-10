@@ -105,5 +105,23 @@ export const projects: ProjectEntity[] = [
     tags: ['nodes', 'infrastructure'],
     status: 'live',
     // No logo vendored yet — falls back to the initial-letter chip.
+  },  {
+    name: 'FreiExchange',
+    url: 'https://freiexchange.com',
+    blurb: 'Centralized exchange for small-cap coins, with a GRC/BTC market.',
+    category: 'exchange',
+    tags: ['exchange'],
+    status: 'live',
+    // Vendored as the FX roundel cropped from the site's wordmark SVG.
+    logo: '/projects/freiexchange.svg',
+  },
+  {
+    name: 'Heliex',
+    url: 'https://heliex.net',
+    blurb: 'An exchange for science-backed coins, currently trading GRC and CURE, with a rain system that distributes freshly minted GRC to active users.',
+    category: 'exchange',
+    tags: ['exchange'],
+    status: 'live',
+    logo: '/projects/heliex.png',
   },
 ];

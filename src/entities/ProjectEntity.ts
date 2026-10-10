@@ -1,5 +1,6 @@
 export type ProjectCategory =
   | 'wallet'
+  | 'exchange'
   | 'mining'
   | 'pools'
   | 'stats'
@@ -25,6 +26,7 @@ export interface ProjectEntity {
 
 export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   wallet: 'Wallets',
+  exchange: 'Exchanges',
   mining: 'Mining & BOINC',
   pools: 'Mining pools',
   stats: 'Stats & explorers',
@@ -35,6 +37,7 @@ export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
 
 export const CATEGORY_ORDER: ProjectCategory[] = [
   'wallet',
+  'exchange',
   'mining',
   'pools',
   'stats',
