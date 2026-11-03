@@ -1,16 +1,16 @@
 /** @type {import('next').NextConfig} */
 
-// CSP allows our self-hosted Plausible at daj.pw and inline <script>/<style>
-// blocks injected by Next hydration, MUI Emotion SSR, and JSON-LD. Sibling
-// APIs (stamp/explorer/grcpay) are fetched server-side, so they don't need
-// connect-src entries.
+// CSP allows inline <script>/<style> blocks injected by Next hydration, MUI
+// Emotion SSR, and JSON-LD. Plausible is first-party (/stats/*) and sibling
+// APIs (stamp/explorer/grcpay) are fetched server-side, so neither needs an
+// extra source.
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://daj.pw",
+  "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self' data:",
-  "connect-src 'self' https://daj.pw",
+  "connect-src 'self'",
   "frame-ancestors 'self'",
   "base-uri 'self'",
   "form-action 'self'",

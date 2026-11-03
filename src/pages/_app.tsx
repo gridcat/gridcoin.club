@@ -4,11 +4,11 @@ import { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import Script from 'next/script';
 import { ThemeMode } from '@/lib/mode';
 import { themeCreator } from '../theme';
 import createEmotionCache from '../createEmotionCache';
 import '../styles/style.css';
+import { Analytics } from '../components/Analytics/Analytics';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -36,9 +36,7 @@ export default function MyApp(props: MyAppProps) {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="theme-color" content={theme.palette.primary.main} />
       </Head>
-      {process.env.NEXT_PUBLIC_TRACK === 'true' && (
-        <Script src="https://daj.pw/js/plausible.js" data-domain="gridcoin.club" />
-      )}
+      <Analytics domain="gridcoin.club" />
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Component {...pageProps} />

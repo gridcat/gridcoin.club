@@ -21,7 +21,7 @@
     "cookie": "^1.1.1",
     "kysely": "^0.28.17",
     "mysql2": "^3.23.4",
-    "next": "16.3.8",
+    "next": "16.4.4",
     "prism-react-renderer": "^2.4.1",
     "react": "19.2.5",
     "react-dom": "19.2.5",
