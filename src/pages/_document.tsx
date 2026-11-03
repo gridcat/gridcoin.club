@@ -19,8 +19,6 @@ export default class MyDocument extends Document {
         data-scroll-behavior="smooth"
       >
         <Head>
-          <link rel="dns-prefetch" href="https://daj.pw" />
-          <link rel="preconnect" href="https://daj.pw" crossOrigin="anonymous" />
           <link rel="dns-prefetch" href="https://stamp.gridcoin.club" />
           <link rel="dns-prefetch" href="https://grcpay.gridcoin.club" />
           {/* <link rel="dns-prefetch" href="https://explorer.gridcoin.club" /> */}
