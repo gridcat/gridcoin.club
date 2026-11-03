@@ -1,3 +1,12 @@
+## [1.12.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.12.0...grc-hub-frontend-v1.12.1) (2026-11-03)
+
+
+### Bug Fixes
+
+* bump next to 16.4.4 ([ffb5881](https://github.com/gridcat/gridcoin.club/commit/ffb588152fb113c4385334d6b2ac1dd703ff15ce))
+* bump next to 16.4.4 ([d62dc14](https://github.com/gridcat/gridcoin.club/commit/d62dc14ff7d658c5a43e5c129eb2248ff822043e))
+* drop the unused gridcoinstats.eu dns-prefetch ([f8c95c1](https://github.com/gridcat/gridcoin.club/commit/f8c95c148fde36160b35e224017e75d16f86cff1))
+
 # [1.12.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.11.1...grc-hub-frontend-v1.12.0) (2026-10-10)
 
 
