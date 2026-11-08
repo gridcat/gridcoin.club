@@ -21,7 +21,7 @@ export default class MyDocument extends Document {
         <Head>
           <link rel="dns-prefetch" href="https://stamp.gridcoin.club" />
           <link rel="dns-prefetch" href="https://grcpay.gridcoin.club" />
-          {/* <link rel="dns-prefetch" href="https://explorer.gridcoin.club" /> */}
+          <link rel="dns-prefetch" href="https://explorer.gridcoin.club" />
           <link rel="dns-prefetch" href="https://grcbazaar.com" />
         </Head>
         <body>

@@ -5,7 +5,7 @@ import type { ServiceEntity } from '@/entities/ServiceEntity';
 // to 'live' to show the full SSR'd live-stat tile.
 //
 // Order is the order they appear in the hive on the home page, and the hive
-// fills its rows 3-4-3, so the three live services lead the top row.
+// fills its rows 3-4-3, so the live services lead from the top row.
 //
 // `gradient` is each service's own mainnet primary.dark -> primary.light,
 // copied from its theme.ts. grcdraw has no frontend yet, so its pair is set
@@ -57,6 +57,18 @@ export const services: ServiceEntity[] = [
     // missing source by omitting the stat row).
   },
   {
+    slug: 'explorer',
+    name: 'Explorer',
+    tagline: 'Block explorer for the Gridcoin mainnet.',
+    url: 'https://explorer.gridcoin.club',
+    color: '#1565c0',
+    gradient: ['#003c8f', '#5e92f3'],
+    mark: 'explorer',
+    short: 'Blocks and beacons',
+    status: 'live',
+    liveSource: 'explorer',
+  },
+  {
     slug: 'grcpay',
     name: 'GRCpay',
     tagline: 'Self-hosted payment facilitator. One-shot wallets, automatic forwarding.',
@@ -67,18 +79,6 @@ export const services: ServiceEntity[] = [
     short: 'One-shot wallets',
     status: 'soon',
     liveSource: 'grcpay',
-  },
-  {
-    slug: 'explorer',
-    name: 'Explorer',
-    tagline: 'Block explorer for the Gridcoin mainnet.',
-    url: 'https://explorer.gridcoin.club',
-    color: '#1565c0',
-    gradient: ['#003c8f', '#5e92f3'],
-    mark: 'explorer',
-    short: 'Blocks and beacons',
-    status: 'soon',
-    liveSource: 'explorer',
   },
   {
     slug: 'radio',
