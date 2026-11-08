@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.12.1...grc-hub-frontend-v1.13.0) (2026-11-08)
+
+
+### Features
+
+* release explorer ([4c0458d](https://github.com/gridcat/gridcoin.club/commit/4c0458d4d87e5dbda3d74607c5b77f798eb4bdd4))
+
 ## [1.12.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.12.0...grc-hub-frontend-v1.12.1) (2026-11-03)
 
 
