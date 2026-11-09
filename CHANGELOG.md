@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.13.0...grc-hub-frontend-v1.14.0) (2026-11-09)
+
+
+### Features
+
+* unsubscribe page ([ccae2a0](https://github.com/gridcat/gridcoin.club/commit/ccae2a090952046593c6addf3569499e78e2ee5c))
+
 # [1.13.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.12.1...grc-hub-frontend-v1.13.0) (2026-11-08)
 
 
