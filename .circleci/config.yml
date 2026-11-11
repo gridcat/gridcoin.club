@@ -84,7 +84,7 @@ jobs:
       - run:
           name: Build Docker image
           command: docker build -t app .
-      - deploy:
+      - run:
           name: Push Docker image
           command: |
             docker login ghcr.io -u gridcat -p${CR_PAT}
