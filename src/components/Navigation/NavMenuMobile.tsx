@@ -88,6 +88,7 @@ export function NavMenuMobile() {
         color="inherit"
         aria-label="menu"
         onClick={handleClickOpen}
+        className={plausibleClass('Mobile Menu', { action: 'open' })}
       >
         <MenuIcon />
       </IconButton>
@@ -126,7 +127,13 @@ export function NavMenuMobile() {
             sx={{ justifyContent: 'flex-end', flexGrow: 1 }}
             disableGutters
           >
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+              className={plausibleClass('Mobile Menu', { action: 'close' })}
+            >
               <CloseIcon />
             </IconButton>
           </Toolbar>

@@ -121,7 +121,12 @@ export function AboutPage() {
               One mailbox for everything: questions, problem reports, and
               requests to remove a node from the
               {' '}
-              <NextMuiLink href="/nodes">addnodes list</NextMuiLink>
+              <NextMuiLink
+                href="/nodes"
+                className={plausibleClass('Internal Link', { to: '/nodes', from: 'about' })}
+              >
+                addnodes list
+              </NextMuiLink>
               .
             </Typography>
             <CopyableValue

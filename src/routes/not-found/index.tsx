@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Container, Box, Typography, Button,
 } from '@mui/material';
@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Seo } from '@/components/Seo';
 import { PageWrapper } from '@/components/PageWrapper';
-import { plausibleClass } from '@/lib/plausible';
+import { plausibleClass, trackEvent } from '@/lib/plausible';
 
 const PageBody = styled(Box)(() => ({
   backgroundImage: 'url(/il-background-error-page.svg)',
@@ -28,7 +28,22 @@ const ErrorContainer = styled(Container)(() => ({
   textAlign: 'center',
 }));
 
+type QueuedPlausible = NonNullable<Window['plausible']> & { q?: unknown[][] };
+
 export function NotFound() {
+  useEffect(() => {
+    // A direct hit renders this before the deferred script defines
+    // window.plausible, so queue the call the way Plausible's own snippet
+    // does. The script replays the queue when it loads.
+    if (!window.plausible) {
+      const queue: unknown[][] = [];
+      const stub = ((...args: unknown[]) => { queue.push(args); }) as QueuedPlausible;
+      stub.q = queue;
+      window.plausible = stub;
+    }
+    trackEvent('404', { path: document.location.pathname });
+  }, []);
+
   return (
     <PageBody>
       <Seo

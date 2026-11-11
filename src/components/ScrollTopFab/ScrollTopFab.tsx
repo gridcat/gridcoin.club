@@ -5,6 +5,7 @@ import {
   useScrollTrigger,
 } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { plausibleClass } from '@/lib/plausible';
 
 export function ScrollTopFab() {
   const trigger = useScrollTrigger({
@@ -24,6 +25,7 @@ export function ScrollTopFab() {
         size="medium"
         aria-label="Scroll to top"
         onClick={handleClick}
+        className={plausibleClass('Scroll Top')}
         sx={{
           position: 'fixed',
           bottom: { xs: 16, sm: 24 },

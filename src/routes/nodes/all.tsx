@@ -413,7 +413,12 @@ export function AllNodesPage(props: AllNodesPageProps) {
             Status comes from our own connection attempts, never from what
             anyone reports. Run one of these and want it delisted?
             {' '}
-            <NextMuiLink href="/about#contact">Contact us</NextMuiLink>
+            <NextMuiLink
+              href="/about#contact"
+              className={plausibleClass('Internal Link', { to: '/about', from: 'nodes-all' })}
+            >
+              Contact us
+            </NextMuiLink>
             .
           </Typography>
         </Container>

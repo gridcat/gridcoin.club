@@ -82,6 +82,9 @@ function CopyButton({ code }: { code: string }) {
         size="small"
         onClick={handleCopy}
         aria-label="Copy code to clipboard"
+        // Literal Plausible class, not plausibleClass(), so this file stays
+        // copyable verbatim into frontends without that helper.
+        className="plausible-event-name=Copy plausible-event-what=code"
         sx={{
           color: copied ? 'success.main' : 'text.secondary',
           '&:hover': { color: 'primary.main' },

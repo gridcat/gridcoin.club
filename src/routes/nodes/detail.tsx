@@ -21,6 +21,7 @@ import { PageWrapper } from '@/components/PageWrapper';
 import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
 import { SectionHeading } from '@/components/SectionHeading';
 import { NextMuiLink } from '@/components/NextMuiLink';
+import { plausibleClass } from '@/lib/plausible';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { NodeStatusChip } from '@/components/NodeStatusChip';
 import { UptimeBar } from '@/components/UptimeBar';
@@ -282,7 +283,12 @@ export function NodeDetailPage({
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             Run this node and would rather it was not listed?
             {' '}
-            <NextMuiLink href="/about#contact">Contact us</NextMuiLink>
+            <NextMuiLink
+              href="/about#contact"
+              className={plausibleClass('Internal Link', { to: '/about', from: 'node-detail' })}
+            >
+              Contact us
+            </NextMuiLink>
             {' '}
             and we will remove it and stop checking it.
           </Typography>
