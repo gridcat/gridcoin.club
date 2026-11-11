@@ -1,3 +1,10 @@
+## [1.14.2](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.14.1...grc-hub-frontend-v1.14.2) (2026-11-11)
+
+
+### Bug Fixes
+
+* stop project and tool clicks from overwriting their Plausible event name ([11ef0bd](https://github.com/gridcat/gridcoin.club/commit/11ef0bd36a9055eaad45ca5cd5edc937f7fdeacb))
+
 ## [1.14.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.14.0...grc-hub-frontend-v1.14.1) (2026-11-11)
 
 
