@@ -70,7 +70,7 @@ export function ToolCard({ tool }: ToolCardProps) {
               startIcon={<GitHubIcon />}
               sx={{ pl: 0, fontWeight: 600 }}
               className={plausibleClass('Outbound Tool', {
-                name: tool.name,
+                tool: tool.name,
                 url: tool.repo,
               })}
             >

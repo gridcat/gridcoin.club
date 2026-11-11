@@ -104,7 +104,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               size="small"
               sx={{ pl: 0, fontWeight: 600 }}
               className={plausibleClass('Outbound Project', {
-                name: project.name,
+                project: project.name,
                 url: project.url,
                 category: project.category,
               })}
