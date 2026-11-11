@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.14.0...grc-hub-frontend-v1.14.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* track navigation, internal links, code copies and 404s in Plausible ([587e14f](https://github.com/gridcat/gridcoin.club/commit/587e14f564e88bfd1e080138153f30e4c2ca7d94))
+
 # [1.14.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.13.0...grc-hub-frontend-v1.14.0) (2026-11-09)
 
 
