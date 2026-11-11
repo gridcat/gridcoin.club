@@ -1,5 +1,6 @@
 import { Breadcrumbs as MuiBreadcrumbs, Typography } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { plausibleClass } from '@/lib/plausible';
 import { NextMuiLink } from './NextMuiLink';
 
 export interface Crumb {
@@ -19,6 +20,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
         <NextMuiLink
           key={crumb.href}
           href={crumb.href}
+          className={plausibleClass('Nav Click', { to: crumb.href, from: 'breadcrumb' })}
           underline="hover"
           sx={{ color: 'text.secondary', fontSize: 'inherit' }}
         >

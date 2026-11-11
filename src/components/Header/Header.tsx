@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { NavMenuMobile } from '@/components/Navigation/NavMenuMobile';
 import { useRouteNavigating } from '@/hooks';
+import { plausibleClass } from '@/lib/plausible';
 import { NavMenuDesktop } from '../Navigation/NavMenuDesktop';
 
 interface Props {
@@ -67,6 +68,7 @@ export function Header({ showLinks = true }: HeaderProps) {
               <Link
                 passHref
                 href="/"
+                className={plausibleClass('Nav Click', { to: '/', from: 'logo' })}
                 style={{
                   textDecoration: 'none',
                   display: 'inline-flex',

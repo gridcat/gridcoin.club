@@ -24,6 +24,7 @@ import { ScrollTopFab } from '@/components/ScrollTopFab/ScrollTopFab';
 import { SectionHeading } from '@/components/SectionHeading';
 import { CodeBlock } from '@/components/CodeBlock/CodeBlock';
 import { NextMuiLink } from '@/components/NextMuiLink';
+import { plausibleClass } from '@/lib/plausible';
 import { NodeStatusDot } from '@/components/NodeStatusChip';
 import type { BothNetworks, NodeList, PublishedNode } from '@/lib/sources/addnodes';
 import { percent, timeAgo, utc } from '@/lib/nodeFormat';
@@ -68,7 +69,12 @@ function NodeTable({ list, now }: { list: NodeList | null; now: Date }) {
               <TableCell sx={{ fontFamily: 'monospace', whiteSpace: 'nowrap' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <NodeStatusDot status={n.status} />
-                  <NextMuiLink href={`/nodes/${n.id}`}>{n.addnode}</NextMuiLink>
+                  <NextMuiLink
+                    href={`/nodes/${n.id}`}
+                    className={plausibleClass('Node Detail', { from: 'nodes' })}
+                  >
+                    {n.addnode}
+                  </NextMuiLink>
                 </Box>
               </TableCell>
               <TableCell sx={{ whiteSpace: 'nowrap' }}>
@@ -198,7 +204,11 @@ export function NodesPage({
               ? `Regenerated every 15 minutes. Last run ${timeAgo(status.lastSuccessAt, now)}.`
               : 'Regenerated every 15 minutes.'}
             {' '}
-            <NextMuiLink href="/nodes/all">See every node we know about →</NextMuiLink>
+            <NextMuiLink
+              href="/nodes/all"
+              className={plausibleClass('Internal Link', { to: '/nodes/all', from: 'nodes' })}
+            >
+              See every node we know about →</NextMuiLink>
           </Typography>
 
           <Grid container spacing={4}>
@@ -280,7 +290,12 @@ export function NodesPage({
             already spreaded around the network by design. But, if you run
             one and still does not want it to be listed here,
             {' '}
-            <NextMuiLink href="/about#contact">contact us</NextMuiLink>
+            <NextMuiLink
+              href="/about#contact"
+              className={plausibleClass('Internal Link', { to: '/about', from: 'nodes' })}
+            >
+              contact us
+            </NextMuiLink>
             {' '}
             and we will remove it from the lists, the JSON and these pages,
             and stop checking it.
