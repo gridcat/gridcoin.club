@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.14.2...grc-hub-frontend-v1.15.0) (2026-11-23)
+
+
+### Features
+
+* radio gr gr ([53e431d](https://github.com/gridcat/gridcoin.club/commit/53e431dd29dcd3469468dae280e7f5a650a96746))
+
 ## [1.14.2](https://github.com/gridcat/gridcoin.club/compare/grc-hub-frontend-v1.14.1...grc-hub-frontend-v1.14.2) (2026-11-11)
 
 
